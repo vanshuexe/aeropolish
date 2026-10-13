@@ -2,14 +2,16 @@
 
 const navigation = [
   { label: "Home", href: "/", key: "home" },
-  { label: "Tinting Centers", href: "/tinting-center", key: "tinting-center" },
   {
     label: "About Us",
     key: "about",
     children: [
       { label: "About Aeropolish", href: "/about-us" },
-      { label: "News", href: "/news" },
-      { label: "Careers", href: "/careers" },
+      { label: "Our Vision", href: "/our-vision" },
+      { label: "Our Mission", href: "/our-mission" },
+      { label: "Client Inquiry", href: "/client" },
+      { label: "Become a Vendor", href: "/vendor" },
+      { label: "Investor Relations", href: "/investor" },
     ],
   },
   {
@@ -20,7 +22,6 @@ const navigation = [
       { label: "Exterior Paints", href: "/exterior-paints" },
       { label: "Industrial Paints", href: "/industrial-paints" },
       { label: "Ink", href: "/ink" },
-      { label: "Alkyd", href: "/alkyd" },
     ],
   },
   {
@@ -30,23 +31,23 @@ const navigation = [
       { label: "Our Colors", href: "/our-colors" },
       { label: "Color Trends", href: "/color-trends" },
       { label: "Color Visualizer", href: "/color-visualizer" },
+      { label: "RAL Colours", href: "/ral-colours" },
     ],
   },
 ];
 
 const footerLinks = {
-  products: navigation[3].children,
+  products: navigation.find((item) => item.key === "products")?.children || [],
   colors: [
     { label: "Our Colors", href: "/our-colors" },
     { label: "Color Visualizer", href: "/color-visualizer" },
     { label: "Color Trends", href: "/color-trends" },
+    { label: "RAL Colours", href: "/ral-colours" },
   ],
   support: [
     { label: "Catalogs", href: "/catalogs" },
-    { label: "Tinting Centers", href: "/tinting-center" },
     { label: "About Us", href: "/about-us" },
     { label: "Contact Us", href: "/#contact" },
-    { label: "Careers", href: "/careers" },
     { label: "Client Inquiry", href: "/client" },
     { label: "Become a Vendor", href: "/vendor" },
     { label: "Investor Relations", href: "/investor" },
@@ -59,37 +60,31 @@ const productCategories = {
     title: "Interior Paints",
     description:
       "Transform your indoor spaces with our premium interior paint solutions",
-    heroImage: "/prodcuts-bg/interior-paints-pachin.webp",
+    heroImage: "/new-images/interior-paints.svg",
     allLabel: "All Interior Paint Products",
   },
   "exterior-paints": {
     title: "Exterior Paints",
     description:
       "Protect and beautify your outdoor surfaces with our durable exterior paint solutions",
-    heroImage: "/prodcuts-bg/extrior-paints-pachin.webp",
+    heroImage: "/new-images/exterior-paints.svg",
     allLabel: "All Exterior Paint Products",
   },
   "industrial-paints": {
     title: "Industrial Paints",
     description:
       "Heavy-duty protection for industrial environments and specialized applications",
-    heroImage: "/prodcuts-bg/industrial-paints-pachin.webp",
+    heroImage: "/new-images/industrial-paints.svg",
     allLabel: "All Industrial Paint Products",
   },
   ink: {
     title: "Ink",
     description:
       "High-quality printing inks for various industrial and commercial applications",
-    heroImage: "/prodcuts-bg/inks-pachin.webp",
+    heroImage: "/new-images/inks.svg",
     allLabel: "All Ink Products",
   },
-  alkyd: {
-    title: "Alkyd",
-    description:
-      "High-performance alkyd resins for superior coating applications and durability",
-    heroImage: "/prodcuts-bg/alkyd-pachin.webp",
-    allLabel: "All Alkyd Products",
-  },
+
 };
 
 // Product tag name -> icon in public/tags (most are the slugified name)
@@ -104,7 +99,26 @@ function tagIcon(tag) {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "");
-  return `/tags/${file}.svg`;
+  // Tags without a dedicated icon fall back to a generic one instead of a broken image.
+  return availableTagIcons().has(file) ? `/tags/${file}.svg` : "/tags/generic.svg";
+}
+
+let tagIconFiles;
+function availableTagIcons() {
+  if (!tagIconFiles) {
+    const fs = require("fs");
+    const path = require("path");
+    try {
+      tagIconFiles = new Set(
+        fs
+          .readdirSync(path.join(process.cwd(), "public", "tags"))
+          .map((name) => name.replace(/\.svg$/, "")),
+      );
+    } catch {
+      return new Set();
+    }
+  }
+  return tagIconFiles;
 }
 
 // Colour families on Our Colors / Color Visualizer, in display order

@@ -47,13 +47,13 @@ export default function CareersPage({
   return (
     <>
       <div className={"bg-gray-50"}>
-        <div className={"w-full mx-[1%] pb-8"} data-careers-page="">
+        <div className={"w-[98%] mx-auto pb-8"} data-careers-page="">
           <div
             className={
-              "w-[96%] sm:w-[98%] h-[65vh] md:h-[55vh] lg:h-[60vh] rounded-xl bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
+              "w-[96%] sm:w-[98%] h-[42vh] min-h-[260px] md:h-[55vh] lg:h-[60vh] rounded-xl bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
             }
             style={cssStyle(
-              "padding-top: calc(60px + 1.5vh); margin-top: 1.5vh; background-image: url('/careers.webp')",
+              "padding-top: calc(60px + 1.5vh); margin-top: 1.5vh; background-image: url('/new-images/careers.svg')",
             )}
           >
             <div

@@ -17,7 +17,7 @@ export default function ProductsPage({
     <>
       <div className={"bg-gray-50"}>
         <div
-          className={"w-full mx-[1%] pb-8"}
+          className={"w-[98%] mx-auto pb-8"}
           data-products-page=""
           data-all-label={category.allLabel}
         >
@@ -50,7 +50,7 @@ export default function ProductsPage({
             </div>
           </div>
 
-          <div className={"w-full mx-[1%] py-4 md:py-8"}>
+          <div className={"w-[98%] mx-auto py-4 md:py-8"}>
             <div className={"w-[98%] max-w-7xl mx-auto px-2"}>
               <form
                 className={"relative"}
@@ -105,7 +105,7 @@ export default function ProductsPage({
             </div>
           </div>
 
-          <div className={"w-full mx-[1%] pb-4 md:pb-8"}>
+          <div className={"w-[98%] mx-auto pb-4 md:pb-8"}>
             <div className={"w-[98%]"}>
               <div className={"max-w-7xl mx-auto px-2"}>
                 <div

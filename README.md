@@ -121,3 +121,7 @@ Set `TEST_BASE_URL` to test a different port.
 ## External resources
 
 The supplied site contains an English version. The Arabic button retains its link to the original Arabic website. Existing Google Cloud images and PDFs, Google Fonts, and the embedded Google Map require an internet connection.
+
+## Styles
+
+`public/css/tailwind.css` is generated: `scripts/tailwind-base.css` plus the Tailwind utilities used in `app/`, `components/`, `lib/` and `config/`. After adding or changing Tailwind classes, run `npm run css` to rebuild it. Hand-written styles live in `public/css/site.css`.

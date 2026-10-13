@@ -5,9 +5,9 @@ import { cssStyle, formatDate } from "../../lib/presentation";
 
 export default function TintingCenterPage({ centers, cities } = {}) {
   const heroImages = [
-    "/tinting-center%20(1).webp",
-    "/tinting-center%20(2).webp",
-    "/tinting-center%20(3).webp",
+    "/new-images/tinting-1.svg",
+    "/new-images/tinting-2.svg",
+    "/new-images/tinting-3.svg",
   ];
   const selectClass =
     "w-full p-3 md:p-3.5 text-sm md:text-base border-2 border-purple-200 rounded-xl bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60 text-gray-800 font-medium shadow-sm";

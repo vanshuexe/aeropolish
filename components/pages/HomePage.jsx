@@ -1,11 +1,342 @@
 import { Fragment } from "react";
 import SiteLink from "../SiteLink";
-import CompanyContent from "../CompanyContent";
+import company from "../../config/company";
 import site from "../../config/site";
 import { cssStyle, formatDate } from "../../lib/presentation";
 
+function getCategoryIcon(key) {
+  switch (key) {
+    case "interior":
+      return (
+        <svg
+          className="w-4 h-4 text-amber-500"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M3 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+          <path d="M19 8v5a2 2 0 0 1-2 2h-5v5a2 2 0 0 1-2 2H8" />
+          <path d="M7 17h2" />
+        </svg>
+      );
+    case "exterior":
+      return (
+        <svg
+          className="w-4 h-4 text-sky-500"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      );
+    case "industrial":
+      return (
+        <svg
+          className="w-4 h-4 text-orange-500"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      );
+    case "inks":
+      return (
+        <svg
+          className="w-4 h-4 text-fuchsia-500"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+          <circle cx="12" cy="15" r="2" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+function ProductSectionCard({ tile }) {
+  return (
+    <SiteLink
+      href={tile.href}
+      className="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col justify-end border border-gray-200/80 bg-gray-900 h-[380px] sm:h-[420px] lg:h-[480px] xl:h-[510px] w-full block cursor-pointer"
+    >
+      {/* Background Image */}
+      <img
+        alt={tile.label}
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+        src={tile.image}
+      />
+
+      {/* Dark Gradient Overlay for Readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10 pointer-events-none transition-opacity duration-300" />
+
+      {/* Subtle Warm Hover Tint */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500 bg-orange-500 pointer-events-none" />
+
+      {/* Top Category Badge with SVG Icon */}
+      <div className="absolute top-4 left-4 z-20 backdrop-blur-md bg-white/95 shadow-md border border-white/70 px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-bold text-gray-800 transition-all duration-300 group-hover:bg-white group-hover:shadow-lg group-hover:scale-105">
+        {getCategoryIcon(tile.categoryKey)}
+        <span>{tile.badge || tile.label}</span>
+      </div>
+
+      {/* Bottom Content */}
+      <div className="relative z-20 p-5 sm:p-6 text-white flex flex-col justify-end w-full">
+        <h3 className="text-xl sm:text-2xl font-bold font-poppins text-white tracking-tight group-hover:text-orange-400 transition-colors duration-300 drop-shadow-sm">
+          {tile.label}
+        </h3>
+        {tile.tagline && (
+          <p className="text-xs sm:text-sm text-gray-200 font-manrope mt-1.5 line-clamp-2 leading-relaxed">
+            {tile.tagline}
+          </p>
+        )}
+        <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between text-xs sm:text-sm font-semibold text-white/90 group-hover:text-orange-400 transition-colors">
+          <span>Explore Range</span>
+          <span className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 shadow-sm">
+            <svg
+              className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth="2.5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </SiteLink>
+  );
+}
+
+function InkProcessIcon({ type, className = "w-4 h-4" }) {
+  switch (type) {
+    case "Offset Inks":
+      return (
+        <svg
+          className={className}
+          viewBox={"0 0 24 24"}
+          fill={"none"}
+          stroke={"currentColor"}
+          strokeWidth={"2"}
+          strokeLinecap={"round"}
+          strokeLinejoin={"round"}
+        >
+          <rect x={"2"} y={"6"} width={"20"} height={"8"} rx={"2"} />
+          <path d={"M6 14v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4"} />
+          <circle cx={"12"} cy={"10"} r={"1.5"} />
+        </svg>
+      );
+    case "Flexo":
+      return (
+        <svg
+          className={className}
+          viewBox={"0 0 24 24"}
+          fill={"none"}
+          stroke={"currentColor"}
+          strokeWidth={"2"}
+          strokeLinecap={"round"}
+          strokeLinejoin={"round"}
+        >
+          <path
+            d={
+              "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+            }
+          />
+          <polyline points={"3.27 6.96 12 12.01 20.73 6.96"} />
+          <line x1={"12"} y1={"22.08"} x2={"12"} y2={"12"} />
+        </svg>
+      );
+    case "Silk Screen":
+      return (
+        <svg
+          className={className}
+          viewBox={"0 0 24 24"}
+          fill={"none"}
+          stroke={"currentColor"}
+          strokeWidth={"2"}
+          strokeLinecap={"round"}
+          strokeLinejoin={"round"}
+        >
+          <rect x={"3"} y={"3"} width={"18"} height={"18"} rx={"2"} />
+          <path d={"M3 15l6-6 4 4 8-8"} />
+          <path d={"M7 19l4-4"} />
+        </svg>
+      );
+    case "Metal Coating":
+      return (
+        <svg
+          className={className}
+          viewBox={"0 0 24 24"}
+          fill={"none"}
+          stroke={"currentColor"}
+          strokeWidth={"2"}
+          strokeLinecap={"round"}
+          strokeLinejoin={"round"}
+        >
+          <path d={"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"} />
+          <path d={"m9 12 2 2 4-4"} />
+        </svg>
+      );
+    case "Rotogravure":
+      return (
+        <svg
+          className={className}
+          viewBox={"0 0 24 24"}
+          fill={"none"}
+          stroke={"currentColor"}
+          strokeWidth={"2"}
+          strokeLinecap={"round"}
+          strokeLinejoin={"round"}
+        >
+          <rect x={"5"} y={"2"} width={"14"} height={"20"} rx={"3"} />
+          <path d={"M9 7h6"} />
+          <path d={"M8 12h8"} />
+          <path d={"M9 17h6"} />
+        </svg>
+      );
+    case "Textile":
+      return (
+        <svg
+          className={className}
+          viewBox={"0 0 24 24"}
+          fill={"none"}
+          stroke={"currentColor"}
+          strokeWidth={"2"}
+          strokeLinecap={"round"}
+          strokeLinejoin={"round"}
+        >
+          <path
+            d={
+              "M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"
+            }
+          />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+function InkGridCard({ ink, style }) {
+  if (!ink) return null;
+  return (
+    <SiteLink
+      href={ink.href}
+      className={
+        "group relative flex flex-col justify-end rounded-2xl md:rounded-3xl overflow-hidden bg-gray-900 border border-gray-200/80 hover:border-blue-400 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 cursor-pointer block w-full"
+      }
+      style={style}
+    >
+      {/* Background Image */}
+      <img
+        alt={ink.label}
+        loading={"lazy"}
+        className={
+          "object-cover absolute inset-0 w-full h-full transform group-hover:scale-108 transition-transform duration-700 ease-out"
+        }
+        src={ink.image}
+      />
+
+      {/* Layered Gradient for Contrast */}
+      <div
+        className={
+          "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 opacity-75 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none"
+        }
+      />
+
+      {/* Top-Left Process Tag Badge */}
+      <div
+        className={
+          "absolute top-3 sm:top-4 left-3 sm:left-4 z-10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/20 shadow-sm text-white text-xs font-semibold tracking-wide"
+        }
+      >
+        <InkProcessIcon type={ink.label} className={"w-3.5 h-3.5 text-blue-300"} />
+        <span>{ink.category || ink.label}</span>
+      </div>
+
+      {/* Top-Right Hover Action Arrow */}
+      <div
+        className={
+          "absolute top-3 sm:top-4 right-3 sm:right-4 z-10 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-blue-600 group-hover:border-blue-600 transition-all duration-300 shadow-md"
+        }
+      >
+        <svg
+          className={"w-4 h-4 transform group-hover:translate-x-0.5 transition-transform"}
+          fill={"none"}
+          stroke={"currentColor"}
+          viewBox={"0 0 24 24"}
+          strokeWidth={"2.5"}
+        >
+          <path
+            strokeLinecap={"round"}
+            strokeLinejoin={"round"}
+            d={"M14 5l7 7m0 0l-7 7m7-7H3"}
+          />
+        </svg>
+      </div>
+
+      {/* Bottom Content Area */}
+      <div className={"relative z-10 p-4 sm:p-5 md:p-6 text-left"}>
+        <div className={"flex items-center justify-between gap-2"}>
+          <h3
+            className={
+              "font-poppins font-bold text-white text-lg sm:text-xl lg:text-2xl drop-shadow-md group-hover:text-blue-300 transition-colors"
+            }
+          >
+            {ink.label}
+          </h3>
+          {ink.tag && (
+            <span
+              className={
+                "px-2.5 py-0.5 rounded-md bg-white/20 backdrop-blur-md border border-white/30 text-white text-[11px] font-medium tracking-wide flex-shrink-0"
+              }
+            >
+              {ink.tag}
+            </span>
+          )}
+        </div>
+        {ink.subtitle && (
+          <p
+            className={
+              "text-gray-200 text-xs sm:text-sm font-manrope mt-1.5 leading-snug line-clamp-2 drop-shadow"
+            }
+          >
+            {ink.subtitle}
+          </p>
+        )}
+      </div>
+    </SiteLink>
+  );
+}
+
 export default function HomePage({ home, countries } = {}) {
   const inkBy = Object.fromEntries(home.inks.map((ink) => [ink.label, ink]));
+  const aboutParagraphs = company.company.find((section) => section.title === "About Us").paragraphs;
+  const visionTagline = company.company.find((section) => section.title === "Our Vision").paragraphs[0];
+  const missionTagline = company.company.find((section) => section.title === "Our Mission").paragraphs[0];
   const sectionHeading =
     "sm:text-3xl font-bold font-poppins text-black text-2xl md:text-3xl lg:text-4xl";
   const sectionStyle =
@@ -14,12 +345,6 @@ export default function HomePage({ home, countries } = {}) {
     "w-full px-3 md:px-4 py-2 md:py-3 text-sm md:text-base border border-gray-300 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200";
   const labelClass =
     "block text-xs md:text-sm font-medium text-gray-700 mb-1 md:mb-2";
-  const inkTitle =
-    "lg:text-2xl font-poppins text-black font-semibold text-sm sm:text-base md:text-lg group-hover:text-orange-500 transition-colors";
-  const inkCard =
-    "relative bg-white rounded-[15px] md:rounded-[20px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300";
-  const inkImage =
-    "object-cover group-hover:scale-105 transition-transform duration-300 absolute inset-0 w-full h-full";
   return (
     <>
       <div className={"bg-white"}>
@@ -59,6 +384,8 @@ export default function HomePage({ home, countries } = {}) {
                             }
                             src={src}
                           />
+                          {/* Dark scrim so the headline stays readable on bright photos */}
+                          <div className={"absolute inset-0 rounded-[20px] bg-gradient-to-b from-black/35 via-black/55 to-black/35"} />
                         </div>
                       </div>
                     </Fragment>
@@ -78,6 +405,7 @@ export default function HomePage({ home, countries } = {}) {
                       className={
                         "font-bold font-poppins text-white drop-shadow-lg mb-2 md:mb-4 text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl"
                       }
+                      style={cssStyle("text-shadow: 0 2px 12px rgba(0,0,0,0.55)")}
                     >
                       {home.hero.title}
                     </h1>
@@ -85,6 +413,7 @@ export default function HomePage({ home, countries } = {}) {
                       className={
                         "font-manrope text-xs sm:text-sm md:text-sm lg:text-base xl:text-lg text-white drop-shadow-lg font-medium"
                       }
+                      style={cssStyle("text-shadow: 0 1px 8px rgba(0,0,0,0.6)")}
                     >
                       {home.hero.subtitle}
                     </p>
@@ -127,14 +456,69 @@ export default function HomePage({ home, countries } = {}) {
               </section>
             </div>
 
-            {/* Products */}
-            <section style={{ padding: "32px 16px", background: "#f8fafc" }}>
-              <CompanyContent compact />
-              <div className="company-actions" style={{ justifyContent: "center" }}>
-                <SiteLink href="/about-us">Our Vision & Mission</SiteLink>
-                <SiteLink href="/client">Client Inquiry</SiteLink>
-                <SiteLink href="/vendor">Become a Vendor</SiteLink>
-                <SiteLink href="/investor">Investment & Partnerships</SiteLink>
+            {/* About Aeropolish Section */}
+            <section className={"w-full bg-white"}>
+              <div className={"mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-20"}>
+                <div className={"grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16"}>
+                  <div>
+                    <p className={"text-sm font-bold uppercase tracking-[0.2em] text-[#f47422]"}>About us</p>
+                    <h2 className={`${sectionHeading} mt-3`}>About Aeropolish</h2>
+                    <div className={"mt-5 space-y-4 text-[15px] leading-[1.8] text-gray-700 sm:text-base"}>
+                      {aboutParagraphs.slice(0, 2).map((text) => (
+                        <p key={text}>{text}</p>
+                      ))}
+                    </div>
+                    <SiteLink
+                      href={"/about-us"}
+                      className={"mt-7 inline-flex min-h-[48px] items-center rounded-xl bg-[#512178] px-6 text-sm font-bold text-white transition-colors hover:bg-[#431b64]"}
+                    >
+                      Read more about us
+                    </SiteLink>
+                  </div>
+                  <div className={"mx-auto flex w-full max-w-[460px] items-end justify-center gap-4 rounded-2xl bg-[#f6f1fa] p-6 sm:gap-6"}>
+                    <img
+                      src={"/new-images/aeropolish-industrial-blue.jpg"}
+                      alt={"Aeropolish industrial quick drying paint, 20 litre drum"}
+                      className={"w-[48%] rounded-2xl bg-white object-cover shadow-lg ring-1 ring-black/5"}
+                      width={"909"}
+                      height={"1024"}
+                      loading={"lazy"}
+                    />
+                    <img
+                      src={"/new-images/aeropolish-interior-premium.jpg"}
+                      alt={"Aeropolish premium interior paint, 20 litre bucket"}
+                      className={"mb-8 w-[48%] rounded-2xl bg-white object-cover shadow-lg ring-1 ring-black/5"}
+                      width={"641"}
+                      height={"853"}
+                      loading={"lazy"}
+                    />
+                  </div>
+                </div>
+
+                <div className={"mt-12 grid gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 sm:mt-16 md:grid-cols-2"}>
+                  {[
+                    { href: "/our-vision", label: "Our Vision", text: visionTagline },
+                    { href: "/our-mission", label: "Our Mission", text: missionTagline },
+                  ].map((item) => (
+                    <SiteLink
+                      key={item.href}
+                      href={item.href}
+                      className={"group flex items-center justify-between gap-6 bg-white p-6 transition-colors hover:bg-[#f6f1fa] sm:p-8"}
+                    >
+                      <span>
+                        <span className={"block font-poppins text-xl font-bold text-[#2a1442]"}>{item.label}</span>
+                        <span className={"mt-1.5 block text-[15px] leading-relaxed text-gray-600"}>{item.text}</span>
+                      </span>
+                      <span className={"flex-shrink-0 text-xl text-[#512178] transition-transform group-hover:translate-x-1"} aria-hidden={"true"}>→</span>
+                    </SiteLink>
+                  ))}
+                </div>
+
+                <p className={"mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#512178]"}>
+                  <SiteLink href={"/client"} className={"hover:underline"}>Client inquiry</SiteLink>
+                  <SiteLink href={"/vendor"} className={"hover:underline"}>Become a vendor</SiteLink>
+                  <SiteLink href={"/investor"} className={"hover:underline"}>Investment &amp; partnerships</SiteLink>
+                </p>
               </div>
             </section>
             <div
@@ -151,216 +535,107 @@ export default function HomePage({ home, countries } = {}) {
                     }
                     style={cssStyle("max-width: none")}
                   >
-                    <div
-                      className={"text-center mb-1 md:mb-3 px-2 py-1 md:py-2"}
-                    >
+                    <div className={"text-center mb-6 md:mb-10 px-2"}>
+                      <div
+                        className={
+                          "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-orange-50 text-orange-600 border border-orange-200/60 mb-3 shadow-xs"
+                        }
+                      >
+                        <span
+                          className={
+                            "w-2 h-2 rounded-full bg-orange-500 animate-pulse"
+                          }
+                        ></span>
+                        Engineered Coating Solutions
+                      </div>
                       <h2
                         className={
-                          "sm:text-3xl font-bold font-poppins text-black mb-1 md:mb-2 text-2xl md:text-3xl lg:text-4xl"
+                          "text-3xl sm:text-4xl lg:text-5xl font-extrabold font-poppins text-gray-900 tracking-tight mb-3"
                         }
                       >
                         Products
                       </h2>
                       <p
                         className={
-                          "sm:text-base lg:text-xl font-manrope text-center text-gray-600 text-sm md:text-base mt-2 mb-4"
+                          "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed"
                         }
                       >
-                        Explore
+                        Explore{" "}
                         <SiteLink
                           className={
-                            "text-orange-500 hover:text-orange-600 font-semibold hover:underline"
+                            "text-orange-500 hover:text-orange-600 font-semibold hover:underline transition-colors"
                           }
                           href={"/interior-paints"}
                         >
                           Decorative
                         </SiteLink>
-                        ,
+                        {", "}
                         <SiteLink
                           className={
-                            "text-orange-500 hover:text-orange-600 font-semibold hover:underline"
+                            "text-orange-500 hover:text-orange-600 font-semibold hover:underline transition-colors"
                           }
                           href={"/industrial-paints"}
                         >
                           Industrial
                         </SiteLink>
-                        ,
+                        {", and "}
                         <SiteLink
                           className={
-                            "text-orange-500 hover:text-orange-600 font-semibold hover:underline"
+                            "text-orange-500 hover:text-orange-600 font-semibold hover:underline transition-colors"
                           }
                           href={"/ink"}
                         >
                           Inks
                         </SiteLink>{" "}
-                        &amp;
-                        <SiteLink
-                          className={
-                            "text-orange-500 hover:text-orange-600 font-semibold hover:underline"
-                          }
-                          href={"/alkyd"}
-                        >
-                          Alkyd
-                        </SiteLink>
-                        Paints for Every Masterpiece
+                        formulated for durability, color brilliance, and protection.
                       </p>
                     </div>
 
-                    {/* Desktop */}
+                    {/* Desktop: 4 Columns Grid */}
                     <div
-                      className={"hidden lg:block relative w-full"}
-                      style={cssStyle(
-                        "min-height: 400px; height: clamp(400px, 70vh, 95vh)",
-                      )}
+                      className={
+                        "hidden lg:grid grid-cols-4 gap-5 xl:gap-6 w-full"
+                      }
                     >
-                      <div
-                        className={"flex justify-center items-center"}
-                        style={cssStyle(
-                          "gap: clamp(0.5rem, 2vw, 4rem); height: 100%; width: 100%",
-                        )}
-                      >
-                        {home.productTiles.map((tile, index0) => {
-                          return (
-                            <Fragment key={index0}>
-                              <div
-                                className={"flex-1 group relative"}
-                                style={cssStyle(
-                                  "height: clamp(260px, 55vh, 520px); min-height: 260px; max-height: 520px; flex: 1 1 0%",
-                                )}
-                              >
-                                <SiteLink
-                                  className={
-                                    "relative w-full h-full block z-10"
-                                  }
-                                  href={tile.href}
-                                >
-                                  <div
-                                    className={"relative w-full h-full group"}
-                                  >
-                                    <img
-                                      alt={tile.label}
-                                      loading={"lazy"}
-                                      className={
-                                        "object-cover rounded-[10px] lg:rounded-[20px] transition-transform duration-300 group-hover:scale-105 cursor-pointer absolute inset-0 w-full h-full"
-                                      }
-                                      src={tile.image}
-                                    />
-                                  </div>
-                                </SiteLink>
-                                <SiteLink
-                                  className={
-                                    "absolute top-full mt-3 left-1/2 transform -translate-x-1/2 group cursor-pointer w-full"
-                                  }
-                                  href={tile.href}
-                                >
-                                  <p
-                                    className={
-                                      "sm:text-base font-manrope font-bold text-black text-center text-xs md:text-sm lg:text-sm xl:text-lg 2xl:text-xl transition-colors duration-300 group-hover:text-orange-500"
-                                    }
-                                  >
-                                    {tile.label}
-                                  </p>
-                                </SiteLink>
-                              </div>
-                            </Fragment>
-                          );
-                        })}
-                      </div>
+                      {home.productTiles.map((tile, index0) => (
+                        <ProductSectionCard
+                          key={tile.label || index0}
+                          tile={tile}
+                        />
+                      ))}
                     </div>
 
-                    {/* Mobile */}
-                    <div className={"md:hidden relative"}>
-                      <div
-                        className={"absolute top-0 right-0 z-20"}
-                        style={cssStyle(
-                          "width: 10%; height: 240px; border-radius: 0 0 0 30px; background: linear-gradient(to right, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 1) 100%); pointer-events: none",
-                        )}
-                      ></div>
-                      <div
-                        className={
-                          "flex gap-3 sm:gap-4 overflow-x-auto pb-4 scrollbar-hide px-1"
-                        }
-                      >
-                        {home.productTiles.map((tile, index1) => {
-                          return (
-                            <Fragment key={index1}>
-                              <div
-                                className={
-                                  "flex-shrink-0 w-40 sm:w-44 group relative"
-                                }
-                              >
-                                <SiteLink
-                                  className={"relative h-52 mb-2 block z-10"}
-                                  href={tile.href}
-                                >
-                                  <img
-                                    alt={tile.label}
-                                    loading={"lazy"}
-                                    className={
-                                      "object-cover rounded-[10px] transition-transform duration-300 group-hover:scale-105 absolute inset-0 w-full h-full"
-                                    }
-                                    src={tile.image}
-                                  />
-                                </SiteLink>
-                                <SiteLink href={tile.href}>
-                                  <p
-                                    className={
-                                      "lg:text-xl font-manrope font-bold text-black text-center text-[10px] sm:text-xs md:text-sm transition-colors duration-300 group-hover:text-orange-500"
-                                    }
-                                  >
-                                    {tile.label}
-                                  </p>
-                                </SiteLink>
-                              </div>
-                            </Fragment>
-                          );
-                        })}
-                      </div>
+                    {/* Tablet: 2x2 Grid */}
+                    <div
+                      className={
+                        "hidden md:grid lg:hidden grid-cols-2 gap-5 w-full"
+                      }
+                    >
+                      {home.productTiles.map((tile, index1) => (
+                        <ProductSectionCard
+                          key={tile.label || index1}
+                          tile={tile}
+                        />
+                      ))}
                     </div>
 
-                    {/* Tablet */}
-                    <div className={"hidden md:block lg:hidden"}>
+                    {/* Mobile: Horizontal Snap Carousel */}
+                    <div className={"md:hidden relative w-full"}>
                       <div
                         className={
-                          "flex gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide px-1"
+                          "flex gap-4 overflow-x-auto pb-4 pt-1 px-1 snap-x snap-mandatory scrollbar-hide"
                         }
                       >
-                        {home.productTiles.map((tile, index2) => {
-                          return (
-                            <Fragment key={index2}>
-                              <div
-                                className={
-                                  "flex-shrink-0 w-52 md:w-60 group relative"
-                                }
-                              >
-                                <SiteLink
-                                  className={
-                                    "relative h-64 md:h-72 mb-3 block z-10"
-                                  }
-                                  href={tile.href}
-                                >
-                                  <img
-                                    alt={tile.label}
-                                    loading={"lazy"}
-                                    className={
-                                      "object-cover rounded-[10px] transition-transform duration-300 group-hover:scale-105 absolute inset-0 w-full h-full"
-                                    }
-                                    src={tile.image}
-                                  />
-                                </SiteLink>
-                                <SiteLink href={tile.href}>
-                                  <p
-                                    className={
-                                      "sm:text-base font-manrope font-bold text-black text-center text-sm md:text-base lg:text-lg transition-colors duration-300 group-hover:text-orange-500"
-                                    }
-                                  >
-                                    {tile.label}
-                                  </p>
-                                </SiteLink>
-                              </div>
-                            </Fragment>
-                          );
-                        })}
+                        {home.productTiles.map((tile, index2) => (
+                          <div
+                            key={tile.label || index2}
+                            className={
+                              "flex-shrink-0 w-[84vw] sm:w-[320px] snap-center"
+                            }
+                          >
+                            <ProductSectionCard tile={tile} />
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -484,92 +759,240 @@ export default function HomePage({ home, countries } = {}) {
 
             {/* Special Paint Effects */}
             <div className={"w-full"} style={cssStyle(sectionStyle)}>
-              <div className={"text-center px-2"}>
-                <h2 className={sectionHeading}>Special Paint Effects</h2>
+              <div className={"text-center mb-6 md:mb-10 px-2"}>
+                <div
+                  className={
+                    "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-orange-50 text-orange-600 border border-orange-200/60 mb-3 shadow-xs"
+                  }
+                >
+                  <svg
+                    className={"w-3.5 h-3.5 text-orange-500"}
+                    viewBox={"0 0 24 24"}
+                    fill={"none"}
+                    stroke={"currentColor"}
+                    strokeWidth={"2.2"}
+                  >
+                    <path
+                      strokeLinecap={"round"}
+                      strokeLinejoin={"round"}
+                      d={
+                        "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"
+                      }
+                    />
+                  </svg>
+                  Luxury Decorative Finishes
+                </div>
+                <h2
+                  className={
+                    "text-3xl sm:text-4xl lg:text-5xl font-extrabold font-poppins text-gray-900 tracking-tight mb-3"
+                  }
+                >
+                  Special Paint Effects
+                </h2>
+                <p
+                  className={
+                    "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed"
+                  }
+                >
+                  Turn ordinary walls into tactile art with our premium Smart
+                  collection — shimmering metallics, soft velvet textures, and
+                  rich rustic mineral finishes.
+                </p>
               </div>
+
               <div
                 className={
-                  "relative w-[96%] sm:w-[98%] mx-auto rounded-2xl md:rounded-3xl overflow-hidden"
+                  "relative w-[96%] sm:w-[98%] mx-auto rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-gray-100"
                 }
                 style={cssStyle(
-                  "height: clamp(400px, 500px, 758px); min-height: clamp(400px, 500px, 758px)",
+                  "height: clamp(420px, 55vh, 600px); min-height: 420px",
                 )}
               >
                 <div
                   className={
-                    "relative overflow-hidden h-full w-full rounded-2xl md:rounded-3xl"
+                    "relative overflow-hidden h-full w-full rounded-2xl md:rounded-3xl group"
                   }
                 >
+                  {/* Background Showcase Image */}
                   <img
-                    alt={"Smart Aeropolish Background"}
+                    alt={"Special Paint Effects"}
                     loading={"lazy"}
                     className={
-                      "object-cover object-left absolute inset-0 w-full h-full"
+                      "object-cover object-center absolute inset-0 w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out"
                     }
                     src={home.images.smart}
                   />
+
+                  {/* Gradient Vignette over left side for crystal-clear readability */}
                   <div
                     className={
-                      "absolute z-10 flex flex-col items-start text-left"
+                      "absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 md:via-black/45 to-transparent pointer-events-none"
                     }
-                    style={cssStyle("top: 12%; left: 3%")}
+                  />
+
+                  {/* Left Content Container */}
+                  <div
+                    className={
+                      "relative z-10 h-full flex flex-col justify-between p-6 sm:p-10 md:p-12 lg:p-16 max-w-xl lg:max-w-2xl text-left"
+                    }
                   >
-                    <div
-                      className={
-                        "relative flex-shrink-0 mb-2 md:mb-3 mx-auto md:mx-0"
-                      }
-                      style={cssStyle(
-                        "width: clamp(120px, 15vw, 300px); height: clamp(40px, 5vw, 100px); min-width: 120px; max-width: 300px; margin-top: 1vh",
-                      )}
-                    >
-                      <img
-                        alt={"Smart"}
+                    <div>
+                      {/* Top Collection Badge */}
+                      <div
                         className={
-                          "object-contain object-center md:object-left absolute inset-0 w-full h-full"
+                          "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold uppercase tracking-wider mb-4 shadow-sm"
                         }
-                        src={"/prodcuts-bg/smart.png"}
-                      />
-                    </div>
-                    <h2
-                      className={
-                        "font-bold font-poppins text-white drop-shadow-lg text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
-                      }
-                    >
-                      Special Paint Effects
-                    </h2>
-                  </div>
-                  <div
-                    className={
-                      "absolute z-10 flex justify-center md:justify-start items-center"
-                    }
-                    style={cssStyle("top: 42%; left: 3%")}
-                  >
-                    <SiteLink
-                      href={
-                        "/interior-paints?subcategory=Special%20Effects%20(Smart%20)"
-                      }
-                      className={
-                        "flex items-center gap-2 md:gap-3 bg-transparent border-none text-white font-medium hover:opacity-80 transition-opacity sm:text-sm xl:text-xl text-sm md:text-base lg:text-lg"
-                      }
-                    >
-                      <span>crafted for durable elegance</span>
-                      <svg
-                        viewBox={"0 0 24 24"}
-                        fill={"none"}
-                        className={"flex-shrink-0"}
-                        style={cssStyle(
-                          "width: clamp(16px, 1.5vw, 24px); height: clamp(16px, 1.5vw, 24px)",
-                        )}
                       >
-                        <path
-                          d={"M9 18L15 12L9 6"}
-                          stroke={"currentColor"}
-                          strokeWidth={"2"}
-                          strokeLinecap={"round"}
-                          strokeLinejoin={"round"}
-                        ></path>
-                      </svg>
-                    </SiteLink>
+                        <svg
+                          className={"w-3.5 h-3.5 text-amber-400"}
+                          fill={"currentColor"}
+                          viewBox={"0 0 20 20"}
+                        >
+                          <path
+                            d={
+                              "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                            }
+                          />
+                        </svg>
+                        Smart Exclusive Series
+                      </div>
+
+                      {/* Golden Smart Logo */}
+                      <div className={"mb-3"}>
+                        <img
+                          alt={"Smart"}
+                          className={
+                            "h-10 sm:h-12 md:h-14 w-auto object-contain drop-shadow-lg"
+                          }
+                          src={"/prodcuts-bg/smart.png"}
+                        />
+                      </div>
+
+                      {/* Heading */}
+                      <h3
+                        className={
+                          "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold font-poppins text-white leading-tight drop-shadow-md"
+                        }
+                      >
+                        Crafted for Durable Elegance
+                      </h3>
+
+                      {/* Description */}
+                      <p
+                        className={
+                          "text-xs sm:text-sm md:text-base text-gray-200 font-manrope mt-3 leading-relaxed drop-shadow"
+                        }
+                      >
+                        Elevate any living room, bedroom, or feature wall with
+                        light-reflecting metallics, velvet tactile softness, and
+                        natural stone-wash textures.
+                      </p>
+
+                      {/* Feature Chips with SVG Icons */}
+                      <div className={"flex flex-wrap gap-2 sm:gap-2.5 mt-5"}>
+                        <div
+                          className={
+                            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium"
+                          }
+                        >
+                          <svg
+                            className={"w-3.5 h-3.5 text-amber-400"}
+                            viewBox={"0 0 24 24"}
+                            fill={"none"}
+                            stroke={"currentColor"}
+                            strokeWidth={"2.5"}
+                          >
+                            <path
+                              strokeLinecap={"round"}
+                              strokeLinejoin={"round"}
+                              d={
+                                "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                              }
+                            />
+                          </svg>
+                          <span>Metallic & Pearl</span>
+                        </div>
+
+                        <div
+                          className={
+                            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium"
+                          }
+                        >
+                          <svg
+                            className={"w-3.5 h-3.5 text-rose-400"}
+                            viewBox={"0 0 24 24"}
+                            fill={"none"}
+                            stroke={"currentColor"}
+                            strokeWidth={"2.5"}
+                          >
+                            <path
+                              strokeLinecap={"round"}
+                              strokeLinejoin={"round"}
+                              d={
+                                "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                              }
+                            />
+                          </svg>
+                          <span>Velvet & Suede Touch</span>
+                        </div>
+
+                        <div
+                          className={
+                            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium"
+                          }
+                        >
+                          <svg
+                            className={"w-3.5 h-3.5 text-sky-400"}
+                            viewBox={"0 0 24 24"}
+                            fill={"none"}
+                            stroke={"currentColor"}
+                            strokeWidth={"2.5"}
+                          >
+                            <path
+                              strokeLinecap={"round"}
+                              strokeLinejoin={"round"}
+                              d={
+                                "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                              }
+                            />
+                          </svg>
+                          <span>Tactile Stucco & Sand</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom CTA Button */}
+                    <div className={"pt-6"}>
+                      <SiteLink
+                        href={
+                          "/interior-paints?subcategory=Special%20Effects%20(Smart%20)"
+                        }
+                        className={
+                          "inline-flex items-center gap-3 px-6 py-3.5 rounded-xl md:rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-sm sm:text-base shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 hover:-translate-y-0.5 transition-all duration-300 group/btn"
+                        }
+                      >
+                        <span>Explore Smart Effects</span>
+                        <span
+                          className={
+                            "w-7 h-7 rounded-full bg-white/25 flex items-center justify-center group-hover/btn:translate-x-1 transition-transform"
+                          }
+                        >
+                          <svg
+                            className={"w-4 h-4 text-white"}
+                            fill={"none"}
+                            stroke={"currentColor"}
+                            viewBox={"0 0 24 24"}
+                            strokeWidth={"2.5"}
+                          >
+                            <path
+                              strokeLinecap={"round"}
+                              strokeLinejoin={"round"}
+                              d={"M14 5l7 7m0 0l-7 7m7-7H3"}
+                            />
+                          </svg>
+                        </span>
+                      </SiteLink>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -577,15 +1000,45 @@ export default function HomePage({ home, countries } = {}) {
 
             {/* Discover Your Perfect Shade (colour trends) */}
             <div className={"w-full"} style={cssStyle(sectionStyle)}>
-              <div className={"text-center px-2"}>
+              <div className={"text-center px-4 max-w-3xl mx-auto mb-6 sm:mb-8"}>
+                <div
+                  className={
+                    "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 text-amber-800 text-xs font-semibold tracking-wide uppercase mb-3 shadow-sm"
+                  }
+                >
+                  <svg
+                    className={"w-3.5 h-3.5 text-amber-600"}
+                    viewBox={"0 0 24 24"}
+                    fill={"none"}
+                    stroke={"currentColor"}
+                    strokeWidth={"2.5"}
+                  >
+                    <path
+                      strokeLinecap={"round"}
+                      strokeLinejoin={"round"}
+                      d={
+                        "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                      }
+                    />
+                  </svg>
+                  <span>NCS Color Trends 2026</span>
+                </div>
                 <h2 className={sectionHeading}>Discover Your Perfect Shade</h2>
+                <p
+                  className={
+                    "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2"
+                  }
+                >
+                  Immerse yourself in our signature Mocha Mousse &amp; earthy warm hues — thoughtfully curated to bring timeless warmth, depth, and serenity to your living spaces.
+                </p>
               </div>
+
               <div
                 className={
-                  "relative w-[96%] sm:w-[98%] mx-auto rounded-2xl md:rounded-3xl overflow-hidden"
+                  "relative w-[96%] sm:w-[98%] mx-auto rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-amber-900/10 group"
                 }
                 style={cssStyle(
-                  "height: clamp(400px, 500px, 758px); min-height: clamp(400px, 500px, 758px)",
+                  "height: clamp(480px, 60vh, 650px); min-height: 480px",
                 )}
               >
                 <div
@@ -593,75 +1046,171 @@ export default function HomePage({ home, countries } = {}) {
                     "relative overflow-hidden h-full w-full rounded-2xl md:rounded-3xl"
                   }
                 >
+                  {/* Background Image */}
                   <img
-                    alt={"Color Trends Background"}
+                    alt={"Color Trends 2026 - Discover Your Perfect Shade"}
                     loading={"lazy"}
                     className={
-                      "object-cover object-right absolute inset-0 w-full h-full"
+                      "object-cover object-left md:object-center absolute inset-0 w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out"
                     }
                     src={home.images.shiny}
                   />
+
+                  {/* Atmospheric Warm Gradient Overlay */}
                   <div
                     className={
-                      "absolute z-10 flex flex-col items-start text-left"
+                      "absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent md:bg-gradient-to-l md:from-[#2c150c]/90 md:via-[#2c150c]/55 md:to-transparent pointer-events-none"
                     }
-                    style={cssStyle("top: 20%; left: 55vw")}
+                  />
+
+                  {/* Right-aligned Content Card */}
+                  <div
+                    className={
+                      "relative z-10 h-full w-full flex flex-col justify-end md:justify-center items-start p-6 sm:p-10 md:p-12 lg:p-16 max-w-xl lg:max-w-2xl md:ml-auto text-left"
+                    }
                   >
+                    {/* Shiny Series Pill Badge */}
                     <div
                       className={
-                        "relative flex-shrink-0 mb-2 md:mb-3 mx-auto md:mx-0"
+                        "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold uppercase tracking-wider mb-3 shadow-sm"
                       }
-                      style={cssStyle(
-                        "width: clamp(120px, 15vw, 300px); height: clamp(40px, 5vw, 100px); min-width: 120px; max-width: 300px; margin-top: 1vh",
-                      )}
                     >
+                      <svg
+                        className={"w-3.5 h-3.5 text-amber-300"}
+                        viewBox={"0 0 20 20"}
+                        fill={"currentColor"}
+                      >
+                        <path
+                          d={
+                            "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                          }
+                        />
+                      </svg>
+                      <span>Shiny Luxury Finish</span>
+                    </div>
+
+                    {/* Shiny Logo */}
+                    <div className={"mb-3 sm:mb-4"}>
                       <img
                         alt={"Shiny"}
                         className={
-                          "object-contain object-center md:object-left absolute inset-0 w-full h-full"
+                          "h-9 sm:h-11 md:h-12 w-auto object-contain drop-shadow-md"
                         }
                         src={"/home/shiny.png"}
                       />
                     </div>
-                    <h2
+
+                    {/* Heading */}
+                    <h3
                       className={
-                        "font-bold font-poppins text-white drop-shadow-lg text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                        "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold font-poppins text-white leading-tight drop-shadow-md"
                       }
                     >
-                      Discover Your Perfect Shade
-                    </h2>
-                  </div>
-                  <div
-                    className={
-                      "absolute z-10 flex flex-col items-start text-left"
-                    }
-                    style={cssStyle("top: 45%; left: 55vw")}
-                  >
+                      Mocha Mousse &amp; Earth Tones
+                    </h3>
+
+                    {/* Subtitle */}
                     <p
                       className={
-                        "font-manrope text-xs sm:text-sm md:text-base lg:text-lg text-white drop-shadow-lg"
+                        "text-xs sm:text-sm md:text-base text-gray-100 font-manrope mt-2 sm:mt-3 leading-relaxed drop-shadow max-w-lg"
                       }
                     >
-                      Explore Aeropolish Paints' Mocha Mousse-Inspired Hues!
+                      {"Explore Aeropolish Paints' signature 2026 forecast — a grounding palette of velvety mocha, sun-baked terracotta, and soft sandstone designed to bring warmth and harmony home."}
                     </p>
-                  </div>
-                  <div
-                    className={
-                      "absolute z-10 flex justify-center md:justify-start items-center"
-                    }
-                    style={cssStyle("top: 55%; left: 55vw")}
-                  >
-                    <SiteLink
-                      href={"/color-trends"}
+
+                    {/* Color Swatch Chips */}
+                    <div
                       className={
-                        "inline-flex items-center justify-center rounded-3xl font-medium transition-all duration-200 hover:scale-105 active:scale-95 h-8 px-3 text-xs sm:h-12 sm:px-6 sm:text-lg text-white"
+                        "flex flex-wrap items-center gap-2 sm:gap-2.5 mt-5"
                       }
-                      style={cssStyle(
-                        "background: linear-gradient(to right, #d89669, #431b0b); border: none",
-                      )}
                     >
-                      Color Trend 2026
-                    </SiteLink>
+                      <div
+                        className={
+                          "inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium hover:bg-black/55 transition-colors"
+                        }
+                      >
+                        <span
+                          className={
+                            "w-3.5 h-3.5 rounded-full shadow-inner border border-white/60 flex-shrink-0"
+                          }
+                          style={cssStyle("background-color: #9E6D53")}
+                        />
+                        <span>Mocha Mousse</span>
+                      </div>
+
+                      <div
+                        className={
+                          "inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium hover:bg-black/55 transition-colors"
+                        }
+                      >
+                        <span
+                          className={
+                            "w-3.5 h-3.5 rounded-full shadow-inner border border-white/60 flex-shrink-0"
+                          }
+                          style={cssStyle("background-color: #C87D55")}
+                        />
+                        <span>Terracotta Warmth</span>
+                      </div>
+
+                      <div
+                        className={
+                          "inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium hover:bg-black/55 transition-colors"
+                        }
+                      >
+                        <span
+                          className={
+                            "w-3.5 h-3.5 rounded-full shadow-inner border border-white/60 flex-shrink-0"
+                          }
+                          style={cssStyle("background-color: #D4A373")}
+                        />
+                        <span>Soft Sandstone</span>
+                      </div>
+
+                      <div
+                        className={
+                          "inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium hover:bg-black/55 transition-colors"
+                        }
+                      >
+                        <span
+                          className={
+                            "w-3.5 h-3.5 rounded-full shadow-inner border border-white/60 flex-shrink-0"
+                          }
+                          style={cssStyle("background-color: #4A2E2B")}
+                        />
+                        <span>Velvet Espresso</span>
+                      </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className={"pt-6"}>
+                      <SiteLink
+                        href={"/color-trends"}
+                        className={
+                          "inline-flex items-center gap-3 px-6 py-3.5 rounded-xl md:rounded-2xl bg-gradient-to-r from-amber-600 via-amber-700 to-amber-900 hover:from-amber-700 hover:to-amber-950 text-white font-bold text-sm sm:text-base shadow-lg shadow-amber-900/30 hover:shadow-xl hover:shadow-amber-900/40 hover:-translate-y-0.5 transition-all duration-300 group/btn"
+                        }
+                      >
+                        <span>Explore NCS Color Trends 2026</span>
+                        <span
+                          className={
+                            "w-7 h-7 rounded-full bg-white/20 flex items-center justify-center group-hover/btn:translate-x-1 transition-transform"
+                          }
+                        >
+                          <svg
+                            className={"w-4 h-4 text-white"}
+                            fill={"none"}
+                            stroke={"currentColor"}
+                            viewBox={"0 0 24 24"}
+                            strokeWidth={"2.5"}
+                          >
+                            <path
+                              strokeLinecap={"round"}
+                              strokeLinejoin={"round"}
+                              d={"M14 5l7 7m0 0l-7 7m7-7H3"}
+                            />
+                          </svg>
+                        </span>
+                      </SiteLink>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -670,429 +1219,476 @@ export default function HomePage({ home, countries } = {}) {
             {/* Stronger Prints (inks) */}
             <div
               className={"w-full"}
-              style={cssStyle("flex-shrink: 0; padding-top: 2rem")}
+              style={cssStyle("flex-shrink: 0; padding-top: 3rem; padding-bottom: 2rem")}
             >
               <div className={"w-[96%] sm:w-[98%] mx-auto"}>
-                <section
-                  className={"relative w-full py-0 md:py-2 lg:py-4"}
-                  style={cssStyle("min-height: 100vh")}
-                >
+                <section className={"relative w-full py-2 md:py-6"}>
                   <div
-                    className={"relative w-full rounded-xl overflow-hidden"}
-                    style={cssStyle("min-height: 100vh")}
+                    className={
+                      "relative w-full rounded-2xl md:rounded-3xl overflow-hidden bg-gradient-to-b from-slate-50 via-gray-50/70 to-white border border-gray-200/80 p-4 sm:p-6 md:p-8 lg:p-10 shadow-sm"
+                    }
                   >
-                    <div className={"absolute inset-0 z-0"}>
-                      <img
-                        alt={""}
+                    {/* Header with Eyebrow Badge, SVG Icon, Heading and Subtitle */}
+                    <div className={"text-center max-w-3xl mx-auto mb-8 md:mb-12"}>
+                      <div
                         className={
-                          "object-cover absolute inset-0 w-full h-full"
+                          "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-800 text-xs font-semibold tracking-wide uppercase mb-3 shadow-sm"
                         }
-                        src={"/prodcuts-bg/background_gradients%20(1).webp"}
-                      />
+                      >
+                        <svg
+                          className={"w-3.5 h-3.5 text-blue-600"}
+                          viewBox={"0 0 24 24"}
+                          fill={"none"}
+                          stroke={"currentColor"}
+                          strokeWidth={"2.5"}
+                        >
+                          <path
+                            strokeLinecap={"round"}
+                            strokeLinejoin={"round"}
+                            d={"M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"}
+                          />
+                          <circle cx={"12"} cy={"15"} r={"2"} />
+                        </svg>
+                        <span>Precision Printing Formulations</span>
+                      </div>
+
+                      <h2 className={sectionHeading}>
+                        Stronger Prints, Brighter Results
+                      </h2>
+
+                      <p
+                        className={
+                          "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2"
+                        }
+                      >
+                        Engineered for commercial presses, packaging converters, and industrial lines — delivering exceptional color intensity, rapid curing, and pin-sharp substrate adhesion.
+                      </p>
                     </div>
+
+                    {/* Mobile Carousel */}
                     <div
-                      className={"relative z-10 w-full p-2 md:p-4 lg:p-6"}
-                      style={cssStyle("min-height: 100vh; padding-bottom: 0")}
+                      className={
+                        "flex md:hidden overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide"
+                      }
                     >
-                      <div
-                        className={
-                          "text-center mb-6 md:mb-8 lg:mb-10 px-2 py-4 md:py-6"
-                        }
-                      >
-                        <h2
-                          className={
-                            "font-poppins text-black text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold"
-                          }
+                      {home.inks.map((ink, index3) => (
+                        <div
+                          key={index3}
+                          className={"flex-shrink-0 snap-center w-[290px] h-[400px]"}
                         >
-                          Stronger Prints, Brighter Results
-                        </h2>
-                        <p
-                          className={
-                            "font-manrope text-gray-600 text-xs sm:text-sm md:text-base lg:text-lg mt-2 md:mt-4"
-                          }
-                        >
-                          Explore Specialized Ink Solutions Crafted for Clarity
-                          and Consistency
-                        </p>
-                      </div>
-
-                      <div
-                        className={
-                          "flex md:hidden overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide"
-                        }
-                      >
-                        {home.inks.map((ink, index3) => {
-                          return (
-                            <Fragment key={index3}>
-                              <div
-                                className={
-                                  "flex-shrink-0 snap-center w-[280px]"
-                                }
-                              >
-                                <SiteLink
-                                  className={
-                                    "relative group cursor-pointer block"
-                                  }
-                                  href={ink.href}
-                                >
-                                  <div
-                                    className={
-                                      "relative bg-white rounded-[15px] overflow-hidden shadow-lg h-[350px]"
-                                    }
-                                  >
-                                    <img
-                                      alt={ink.label}
-                                      loading={"lazy"}
-                                      className={
-                                        "object-cover absolute inset-0 w-full h-full"
-                                      }
-                                      src={ink.image}
-                                    />
-                                  </div>
-                                  <div className={"mt-2 text-center"}>
-                                    <h3
-                                      className={
-                                        "sm:text-2xl md:text-2xl lg:text-2xl font-poppins text-black font-semibold text-sm"
-                                      }
-                                    >
-                                      {ink.label}
-                                    </h3>
-                                  </div>
-                                </SiteLink>
-                              </div>
-                            </Fragment>
-                          );
-                        })}
-                      </div>
-
-                      <div
-                        className={
-                          "hidden md:grid grid-cols-1 gap-2 lg:gap-2 lg:[grid-template-columns:30%_40%_30%]"
-                        }
-                      >
-                        <div>
-                          <SiteLink
-                            className={"relative group cursor-pointer block"}
-                            href={inkBy["Offset Inks"].href}
-                          >
-                            <div
-                              data-offset-inks=""
-                              className={`${inkCard} mx-auto`}
-                              style={cssStyle(
-                                "height: clamp(500px, 59vh, 800px); max-width: 85%",
-                              )}
-                            >
-                              <img
-                                alt={"Offset Inks"}
-                                loading={"lazy"}
-                                className={inkImage}
-                                src={inkBy["Offset Inks"].image}
-                              />
-                            </div>
-                            <div className={"mt-2 md:mt-3 text-center"}>
-                              <h3 className={inkTitle}>Offset Inks</h3>
-                            </div>
-                          </SiteLink>
+                          <InkGridCard ink={ink} style={cssStyle("height: 100%")} />
                         </div>
-                        <div>
-                          <div className={"space-y-2"}>
-                            <div className={"grid grid-cols-3 gap-4"}>
-                              <SiteLink
-                                className={
-                                  "col-span-2 md:col-span-1 relative group cursor-pointer block"
-                                }
-                                href={inkBy["Flexo"].href}
-                              >
-                                <div
-                                  data-flexo=""
-                                  className={inkCard}
-                                  style={cssStyle(
-                                    "height: clamp(180px, 26vh, 350px)",
-                                  )}
-                                >
-                                  <img
-                                    alt={"Flexo"}
-                                    loading={"lazy"}
-                                    className={inkImage}
-                                    src={inkBy["Flexo"].image}
-                                  />
-                                </div>
-                                <div className={"mt-2 md:mt-3 text-center"}>
-                                  <h3 className={inkTitle}>Flexo</h3>
-                                </div>
-                              </SiteLink>
-                              <SiteLink
-                                className={
-                                  "col-span-2 relative group cursor-pointer block"
-                                }
-                                href={inkBy["Silk Screen"].href}
-                              >
-                                <div
-                                  data-silk-screen=""
-                                  className={inkCard}
-                                  style={cssStyle(
-                                    "height: clamp(150px, 22vh, 300px)",
-                                  )}
-                                >
-                                  <img
-                                    alt={"Silk Screen"}
-                                    loading={"lazy"}
-                                    className={inkImage}
-                                    src={inkBy["Silk Screen"].image}
-                                  />
-                                </div>
-                                <div className={"mt-2 md:mt-3 text-center"}>
-                                  <h3 className={inkTitle}>Silk Screen</h3>
-                                </div>
-                              </SiteLink>
-                            </div>
-                            <div className={"grid grid-cols-3 gap-4"}>
-                              <SiteLink
-                                className={
-                                  "col-span-2 md:col-span-1 relative group cursor-pointer block"
-                                }
-                                href={inkBy["Metal Coating"].href}
-                              >
-                                <div
-                                  data-metal-coating=""
-                                  className={inkCard}
-                                  style={cssStyle(
-                                    "height: clamp(180px, 26vh, 350px)",
-                                  )}
-                                >
-                                  <img
-                                    alt={"Metal Coating"}
-                                    loading={"lazy"}
-                                    className={inkImage}
-                                    src={inkBy["Metal Coating"].image}
-                                  />
-                                </div>
-                                <div className={"mt-2 md:mt-3 text-center"}>
-                                  <h3 className={inkTitle}>Metal Coating</h3>
-                                </div>
-                              </SiteLink>
-                              <SiteLink
-                                className={
-                                  "col-span-2 relative group cursor-pointer block"
-                                }
-                                href={inkBy["Rotogravure"].href}
-                              >
-                                <div
-                                  data-rotogravure=""
-                                  className={inkCard}
-                                  style={cssStyle(
-                                    "height: clamp(150px, 22vh, 300px)",
-                                  )}
-                                >
-                                  <img
-                                    alt={"Rotogravure"}
-                                    loading={"lazy"}
-                                    className={inkImage}
-                                    src={inkBy["Rotogravure"].image}
-                                  />
-                                </div>
-                                <div className={"mt-2 md:mt-3 text-center"}>
-                                  <h3 className={inkTitle}>Rotogravure</h3>
-                                </div>
-                              </SiteLink>
-                            </div>
+                      ))}
+                    </div>
+
+                    {/* Desktop Balanced 3-Column Magazine Grid */}
+                    <div
+                      className={
+                        "hidden md:grid grid-cols-1 gap-4 lg:gap-5 lg:[grid-template-columns:30%_40%_30%]"
+                      }
+                    >
+                      {/* Left Column: Offset Inks (Full height) */}
+                      <div>
+                        <InkGridCard
+                          ink={inkBy["Offset Inks"]}
+                          style={cssStyle("height: clamp(520px, 62vh, 640px)")}
+                        />
+                      </div>
+
+                      {/* Middle Column: 2 Rows (Flexo + Silk Screen, Metal + Rotogravure) */}
+                      <div className={"flex flex-col gap-4 lg:gap-5 justify-between"}>
+                        {/* Row 1 */}
+                        <div className={"grid grid-cols-3 gap-4 lg:gap-5"}>
+                          <div className={"col-span-1"}>
+                            <InkGridCard
+                              ink={inkBy["Flexo"]}
+                              style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
+                            />
+                          </div>
+                          <div className={"col-span-2"}>
+                            <InkGridCard
+                              ink={inkBy["Silk Screen"]}
+                              style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
+                            />
                           </div>
                         </div>
-                        <div>
-                          <SiteLink
-                            className={"relative group cursor-pointer block"}
-                            href={inkBy["Textile"].href}
-                          >
-                            <div
-                              style={cssStyle(
-                                "margin-top: 1vh; border-radius: 15px; position: relative; overflow: hidden",
-                              )}
-                            >
-                              <div
-                                data-textile=""
-                                className={
-                                  "relative rounded-[15px] md:rounded-[20px] overflow-hidden transition-all duration-300 mx-auto"
-                                }
-                                style={cssStyle(
-                                  "height: clamp(380px, 52vh, 680px); max-width: 85%",
-                                )}
-                              >
-                                <img
-                                  alt={"Textile"}
-                                  loading={"lazy"}
-                                  className={
-                                    "object-cover transition-transform duration-300 absolute inset-0 w-full h-full"
-                                  }
-                                  src={inkBy["Textile"].image}
-                                />
-                              </div>
-                            </div>
-                            <div className={"mt-2 md:mt-3 text-center"}>
-                              <h3 className={inkTitle}>Textile</h3>
-                            </div>
-                          </SiteLink>
+
+                        {/* Row 2 */}
+                        <div className={"grid grid-cols-3 gap-4 lg:gap-5"}>
+                          <div className={"col-span-1"}>
+                            <InkGridCard
+                              ink={inkBy["Metal Coating"]}
+                              style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
+                            />
+                          </div>
+                          <div className={"col-span-2"}>
+                            <InkGridCard
+                              ink={inkBy["Rotogravure"]}
+                              style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
+                            />
+                          </div>
                         </div>
                       </div>
+
+                      {/* Right Column: Textile (Full height matching Offset Inks) */}
+                      <div>
+                        <InkGridCard
+                          ink={inkBy["Textile"]}
+                          style={cssStyle("height: clamp(520px, 62vh, 640px)")}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Performance Pillars Row */}
+                    <div
+                      className={
+                        "mt-10 md:mt-12 pt-8 border-t border-gray-200/80 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto"
+                      }
+                    >
+                      <div className={"flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-gray-100 shadow-sm"}>
+                        <div className={"w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"}>
+                          <svg className={"w-5 h-5"} fill={"none"} stroke={"currentColor"} viewBox={"0 0 24 24"} strokeWidth={"2"}>
+                            <path strokeLinecap={"round"} strokeLinejoin={"round"} d={"M13 10V3L4 14h7v7l9-11h-7z"} />
+                          </svg>
+                        </div>
+                        <div className={"text-left"}>
+                          <div className={"text-xs font-bold text-gray-900 font-poppins"}>Rapid Cure Speed</div>
+                          <div className={"text-[11px] text-gray-500 font-manrope"}>UV &amp; air-cure formulas</div>
+                        </div>
+                      </div>
+
+                      <div className={"flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-gray-100 shadow-sm"}>
+                        <div className={"w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"}>
+                          <svg className={"w-5 h-5"} fill={"none"} stroke={"currentColor"} viewBox={"0 0 24 24"} strokeWidth={"2"}>
+                            <path strokeLinecap={"round"} strokeLinejoin={"round"} d={"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"} />
+                          </svg>
+                        </div>
+                        <div className={"text-left"}>
+                          <div className={"text-xs font-bold text-gray-900 font-poppins"}>High Dot Sharpness</div>
+                          <div className={"text-[11px] text-gray-500 font-manrope"}>Micro-detail precision</div>
+                        </div>
+                      </div>
+
+                      <div className={"flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-gray-100 shadow-sm"}>
+                        <div className={"w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0"}>
+                          <svg className={"w-5 h-5"} fill={"none"} stroke={"currentColor"} viewBox={"0 0 24 24"} strokeWidth={"2"}>
+                            <path strokeLinecap={"round"} strokeLinejoin={"round"} d={"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"} />
+                          </svg>
+                        </div>
+                        <div className={"text-left"}>
+                          <div className={"text-xs font-bold text-gray-900 font-poppins"}>Substrate Adhesion</div>
+                          <div className={"text-[11px] text-gray-500 font-manrope"}>Paper, film, tin &amp; fabric</div>
+                        </div>
+                      </div>
+
+                      <div className={"flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-gray-100 shadow-sm"}>
+                        <div className={"w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0"}>
+                          <svg className={"w-5 h-5"} fill={"none"} stroke={"currentColor"} viewBox={"0 0 24 24"} strokeWidth={"2"}>
+                            <path strokeLinecap={"round"} strokeLinejoin={"round"} d={"M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.286L13 21l-2.286-6.857L5 12l5.714-2.286L13 3z"} />
+                          </svg>
+                        </div>
+                        <div className={"text-left"}>
+                          <div className={"text-xs font-bold text-gray-900 font-poppins"}>Low Odor &amp; Safe</div>
+                          <div className={"text-[11px] text-gray-500 font-manrope"}>Global compliance standards</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom CTA Button */}
+                    <div className={"text-center pt-8 md:pt-10 pb-2"}>
+                      <SiteLink
+                        href={"/ink"}
+                        className={
+                          "inline-flex items-center gap-3 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 hover:from-blue-700 hover:to-violet-800 text-white font-bold text-sm sm:text-base shadow-xl shadow-indigo-500/25 hover:shadow-2xl hover:shadow-indigo-500/35 hover:-translate-y-0.5 transition-all duration-300 group/btn"
+                        }
+                      >
+                        <span>Explore All Ink Formulations</span>
+                        <span
+                          className={
+                            "w-7 h-7 rounded-full bg-white/20 flex items-center justify-center group-hover/btn:translate-x-1 transition-transform"
+                          }
+                        >
+                          <svg
+                            className={"w-4 h-4 text-white"}
+                            fill={"none"}
+                            stroke={"currentColor"}
+                            viewBox={"0 0 24 24"}
+                            strokeWidth={"2.5"}
+                          >
+                            <path
+                              strokeLinecap={"round"}
+                              strokeLinejoin={"round"}
+                              d={"M14 5l7 7m0 0l-7 7m7-7H3"}
+                            />
+                          </svg>
+                        </span>
+                      </SiteLink>
                     </div>
                   </div>
                 </section>
               </div>
             </div>
-
-            {/* Tinting Centers */}
-            <div
-              className={"w-full"}
-              style={cssStyle(
-                "flex-shrink: 0; padding-bottom: 2rem; padding-top: 2rem",
-              )}
-            >
-              <div
-                className={"text-center px-2"}
-                style={cssStyle("padding-bottom: 2rem")}
-              >
-                <h2 className={sectionHeading}>Tinting Centers</h2>
-              </div>
-              <div
-                className={
-                  "relative w-[96%] sm:w-[98%] mx-auto rounded-2xl md:rounded-3xl overflow-hidden"
-                }
-                style={cssStyle("height: 50vh; min-height: 50vh")}
-              >
-                <div
-                  className={
-                    "relative overflow-hidden h-full w-full rounded-2xl md:rounded-3xl"
-                  }
-                >
-                  <img
-                    alt={"Tinting Centers Background"}
-                    loading={"lazy"}
-                    className={
-                      "object-cover object-center absolute inset-0 w-full h-full"
-                    }
-                    src={home.images.tinting}
-                  />
-                  <div
-                    className={
-                      "absolute z-10 flex flex-col items-start text-left"
-                    }
-                    style={cssStyle("top: 35%; left: 3%")}
-                  >
-                    <h2
-                      className={
-                        "font-bold font-poppins drop-shadow-lg text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-black"
-                      }
-                    >
-                      Tinting Centers
-                    </h2>
-                  </div>
-                  <div
-                    className={
-                      "absolute z-10 flex flex-col items-start text-left"
-                    }
-                    style={cssStyle("top: 50%; left: 3%")}
-                  >
-                    <p
-                      className={
-                        "font-manrope text-xs sm:text-sm md:text-base lg:text-lg drop-shadow-lg text-black"
-                      }
-                    >
-                      Professional color mixing and tinting services for all
-                      your painting needs
-                    </p>
-                  </div>
-                  <div
-                    className={
-                      "absolute z-10 flex justify-center md:justify-start items-center"
-                    }
-                    style={cssStyle("top: 65%; left: 3%")}
-                  >
-                    <SiteLink
-                      href={"/tinting-center"}
-                      className={
-                        "inline-flex items-center justify-center rounded-3xl font-medium transition-all duration-200 text-white hover:scale-105 active:scale-95 h-8 px-3 text-xs sm:h-12 sm:px-6 sm:text-lg"
-                      }
-                      style={cssStyle("background-color: #f65c00")}
-                    >
-                      Find Centers
-                    </SiteLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Contact */}
             <div className={"w-full"} style={cssStyle(sectionStyle)}>
-              <div
-                className={"text-center px-2"}
-                style={cssStyle("padding-bottom: 2rem")}
-              >
-                <h2 className={sectionHeading}>Contact Us</h2>
-              </div>
-              <div className={"w-[96%] sm:w-[98%] mx-auto"}>
-                <section
-                  id={"contact"}
-                  className={"w-full py-8 md:py-12 lg:py-16 md:h-full"}
+              <div className={"text-center px-4 max-w-3xl mx-auto mb-8 sm:mb-12"}>
+                <div
+                  className={
+                    "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200/80 text-purple-800 text-xs font-semibold tracking-wide uppercase mb-3 shadow-sm"
+                  }
                 >
+                  <svg
+                    className={"w-3.5 h-3.5 text-purple-600"}
+                    viewBox={"0 0 24 24"}
+                    fill={"none"}
+                    stroke={"currentColor"}
+                    strokeWidth={"2.5"}
+                  >
+                    <path
+                      strokeLinecap={"round"}
+                      strokeLinejoin={"round"}
+                      d={
+                        "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                      }
+                    />
+                  </svg>
+                  <span>Customer Support &amp; Partnerships</span>
+                </div>
+                <h2 className={sectionHeading}>Get in Touch with Aeropolish</h2>
+                <p
+                  className={
+                    "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2"
+                  }
+                >
+                  Reach out for architectural consultations, bulk commercial orders, personalized color mixing, or dealer network registration.
+                </p>
+              </div>
+
+              <div className={"w-[96%] sm:w-[98%] mx-auto"}>
+                <section id={"contact"} className={"w-full"}>
                   <div
                     className={
-                      "relative w-[96%] sm:w-[98%] mx-auto h-auto md:h-full rounded-xl overflow-hidden"
+                      "relative w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-gray-200/80 bg-white"
                     }
                   >
-                    <div data-contact-layout="" className={"flex flex-col md:flex-row h-full gap-4"}>
+                    <div
+                      data-contact-layout=""
+                      className={"flex flex-col lg:flex-row h-full"}
+                    >
+                      {/* Left Column: Corporate Building & Direct Channels */}
                       <div
                         className={
-                          "w-full md:w-[40%] h-[300px] sm:h-[400px] md:h-auto rounded-xl overflow-hidden relative"
+                          "w-full lg:w-[42%] relative min-h-[440px] lg:min-h-[640px] flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-hidden text-left"
                         }
                       >
+                        {/* Background Building Image */}
                         <img
-                          alt={"Contact Background"}
+                          alt={"Aeropolish Headquarters Building"}
                           loading={"lazy"}
                           className={
                             "object-cover object-center absolute inset-0 w-full h-full"
                           }
                           src={home.images.contact}
                         />
+
+                        {/* Rich Dark Vignette Overlay */}
                         <div
                           className={
-                            "absolute z-10 flex flex-col items-start text-left"
+                            "absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/75 to-slate-900/40 pointer-events-none"
                           }
-                          style={cssStyle("top: 20%; left: 10%")}
-                        >
-                          <h2
+                        />
+
+                        {/* Top Badge & Heading */}
+                        <div className={"relative z-10"}>
+                          <div
                             className={
-                              "font-bold font-poppins text-white drop-shadow-lg text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                              "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-wide uppercase mb-4 shadow-sm"
                             }
                           >
-                            Get In Touch
-                          </h2>
+                            <span className={"w-2 h-2 rounded-full bg-emerald-400 animate-pulse"} />
+                            <span>Aeropolish Corporate Office</span>
+                          </div>
+
+                          <h3
+                            className={
+                              "text-2xl sm:text-3xl lg:text-4xl font-extrabold font-poppins text-white leading-tight drop-shadow-md"
+                            }
+                          >
+                            Let&apos;s Build Something Exceptional Together
+                          </h3>
+
+                          <p
+                            className={
+                              "text-xs sm:text-sm md:text-base text-gray-200 font-manrope mt-3 leading-relaxed drop-shadow"
+                            }
+                          >
+                            Whether you need guidance on heavy-duty industrial coatings or want to explore our color visualizer for an interior project, our experts are here to help.
+                          </p>
+                        </div>
+
+                        {/* Bottom Direct Channels */}
+                        <div className={"relative z-10 space-y-3 pt-8"}>
+                          <div
+                            className={
+                              "flex items-center gap-3.5 p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-white"
+                            }
+                          >
+                            <div
+                              className={
+                                "w-10 h-10 rounded-lg bg-purple-600/60 flex items-center justify-center flex-shrink-0 text-white shadow-sm"
+                              }
+                            >
+                              <svg
+                                className={"w-5 h-5"}
+                                fill={"none"}
+                                stroke={"currentColor"}
+                                viewBox={"0 0 24 24"}
+                                strokeWidth={"2"}
+                              >
+                                <path
+                                  strokeLinecap={"round"}
+                                  strokeLinejoin={"round"}
+                                  d={
+                                    "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                  }
+                                />
+                              </svg>
+                            </div>
+                            <div>
+                              <div className={"text-[11px] text-gray-300 font-medium uppercase tracking-wider"}>
+                                Call Toll-Free
+                              </div>
+                              <div className={"text-sm sm:text-base font-bold font-poppins text-white"}>
+                                +91 1800 234 5678
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            className={
+                              "flex items-center gap-3.5 p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-white"
+                            }
+                          >
+                            <div
+                              className={
+                                "w-10 h-10 rounded-lg bg-blue-600/60 flex items-center justify-center flex-shrink-0 text-white shadow-sm"
+                              }
+                            >
+                              <svg
+                                className={"w-5 h-5"}
+                                fill={"none"}
+                                stroke={"currentColor"}
+                                viewBox={"0 0 24 24"}
+                                strokeWidth={"2"}
+                              >
+                                <path
+                                  strokeLinecap={"round"}
+                                  strokeLinejoin={"round"}
+                                  d={
+                                    "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                  }
+                                />
+                              </svg>
+                            </div>
+                            <div>
+                              <div className={"text-[11px] text-gray-300 font-medium uppercase tracking-wider"}>
+                                Email Inquiries
+                              </div>
+                              <div className={"text-sm sm:text-base font-bold font-poppins text-white"}>
+                                contact@aeropolish.com
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            className={
+                              "flex items-center gap-3.5 p-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-white"
+                            }
+                          >
+                            <div
+                              className={
+                                "w-10 h-10 rounded-lg bg-amber-600/60 flex items-center justify-center flex-shrink-0 text-white shadow-sm"
+                              }
+                            >
+                              <svg
+                                className={"w-5 h-5"}
+                                fill={"none"}
+                                stroke={"currentColor"}
+                                viewBox={"0 0 24 24"}
+                                strokeWidth={"2"}
+                              >
+                                <path
+                                  strokeLinecap={"round"}
+                                  strokeLinejoin={"round"}
+                                  d={
+                                    "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                  }
+                                />
+                                <path
+                                  strokeLinecap={"round"}
+                                  strokeLinejoin={"round"}
+                                  d={"M15 11a3 3 0 11-6 0 3 3 0 016 0z"}
+                                />
+                              </svg>
+                            </div>
+                            <div>
+                              <div className={"text-[11px] text-gray-300 font-medium uppercase tracking-wider"}>
+                                Corporate Campus
+                              </div>
+                              <div className={"text-xs sm:text-sm font-semibold font-manrope text-white"}>
+                                Aeropolish Complex, Phase 2, Industrial Hub
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
+
+                      {/* Right Column: High-End Contact Form */}
                       <div
                         className={
-                          "w-full md:w-[60%] h-auto md:h-full bg-[#CDCDCD] flex flex-col justify-center items-center p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 rounded-xl"
+                          "w-full lg:w-[58%] bg-gradient-to-br from-white via-slate-50/60 to-purple-50/20 flex flex-col justify-center p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14"
                         }
                       >
-                        <div className={"w-full max-w-4xl"}>
+                        <div className={"w-full max-w-2xl mx-auto text-left"}>
+                          <div className={"mb-6 md:mb-8"}>
+                            <h3
+                              className={
+                                "text-xl sm:text-2xl md:text-3xl font-extrabold font-poppins text-gray-900"
+                              }
+                            >
+                              Send Us a Message
+                            </h3>
+                            <p
+                              className={
+                                "text-xs sm:text-sm md:text-base text-gray-600 font-manrope mt-1"
+                              }
+                            >
+                              Fill out the form below and our technical advisory team will get in touch within 24 hours.
+                            </p>
+                          </div>
+
                           <form
                             data-contact-form=""
                             action={"/api/contact"}
                             method={"post"}
-                            className={"space-y-4 md:space-y-6"}
+                            className={"space-y-4 md:space-y-5"}
                             noValidate
                           >
                             <div>
                               <label htmlFor={"name"} className={labelClass}>
-                                Name
+                                Full Name
                               </label>
-                              <input
-                                type={"text"}
-                                id={"name"}
-                                name={"name"}
-                                required
-                                className={inputClass}
-                                placeholder={"Enter your name"}
-                              />
+                              <div className={"relative"}>
+                                <input
+                                  type={"text"}
+                                  id={"name"}
+                                  name={"name"}
+                                  required
+                                  className={inputClass}
+                                  placeholder={"e.g. John Doe"}
+                                />
+                              </div>
                             </div>
+
                             <div
                               className={
                                 "grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4"
@@ -1100,7 +1696,7 @@ export default function HomePage({ home, countries } = {}) {
                             >
                               <div>
                                 <label htmlFor={"city"} className={labelClass}>
-                                  City
+                                  City / Location
                                 </label>
                                 <input
                                   type={"text"}
@@ -1108,7 +1704,7 @@ export default function HomePage({ home, countries } = {}) {
                                   name={"city"}
                                   required
                                   className={inputClass}
-                                  placeholder={"Enter your city"}
+                                  placeholder={"e.g. Mumbai, Delhi, Bengaluru"}
                                 />
                               </div>
                               <div>
@@ -1116,7 +1712,7 @@ export default function HomePage({ home, countries } = {}) {
                                   htmlFor={"category"}
                                   className={labelClass}
                                 >
-                                  Choose
+                                  Product Interest
                                 </label>
                                 <select
                                   id={"category"}
@@ -1124,7 +1720,7 @@ export default function HomePage({ home, countries } = {}) {
                                   required
                                   className={inputClass}
                                 >
-                                  <option value={""}>Select an option</option>
+                                  <option value={""}>Select product category</option>
                                   {home.contactCategories.map((c, index4) => {
                                     return (
                                       <Fragment key={index4}>
@@ -1137,108 +1733,117 @@ export default function HomePage({ home, countries } = {}) {
                                 </select>
                               </div>
                             </div>
+
                             <div
                               className={
-                                "grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4"
+                                "grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4"
                               }
                             >
-                              <div className={"space-y-3 md:space-y-4"}>
-                                <div>
-                                  <label
-                                    htmlFor={"email"}
-                                    className={labelClass}
-                                  >
-                                    Email
-                                  </label>
-                                  <input
-                                    type={"email"}
-                                    id={"email"}
-                                    name={"email"}
-                                    required
-                                    className={inputClass}
-                                    placeholder={"Enter your email"}
-                                  />
-                                </div>
-                                <div
-                                  className={"grid grid-cols-2 gap-2 items-end"}
+                              <div>
+                                <label
+                                  htmlFor={"email"}
+                                  className={labelClass}
                                 >
-                                  <div className={"flex flex-col"}>
-                                    <label
-                                      htmlFor={"countryCode"}
-                                      className={labelClass}
-                                    >
-                                      Country Code
-                                    </label>
-                                    <select
-                                      defaultValue={home.defaultCountryCode}
-                                      id={"countryCode"}
-                                      name={"countryCode"}
-                                      className={
-                                        "w-full h-10 md:h-12 px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm border border-gray-300 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
-                                      }
-                                    >
-                                      {countries.map((c, index5) => {
-                                        return (
-                                          <Fragment key={index5}>
-                                            <option value={c.code}>
-                                              {c.flag} {c.name} ({c.code})
-                                            </option>
-                                          </Fragment>
-                                        );
-                                      })}
-                                    </select>
-                                  </div>
-                                  <div className={"flex flex-col"}>
-                                    <label
-                                      htmlFor={"phone"}
-                                      className={labelClass}
-                                    >
-                                      Phone
-                                    </label>
-                                    <input
-                                      type={"tel"}
-                                      id={"phone"}
-                                      name={"phone"}
-                                      required
-                                      className={
-                                        "w-full h-10 md:h-12 px-2 md:px-4 py-2 md:py-3 text-sm md:text-base border border-gray-300 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
-                                      }
-                                      placeholder={"Enter your phone number"}
-                                    />
-                                  </div>
-                                </div>
+                                  Email Address
+                                </label>
+                                <input
+                                  type={"email"}
+                                  id={"email"}
+                                  name={"email"}
+                                  required
+                                  className={inputClass}
+                                  placeholder={"name@example.com"}
+                                />
                               </div>
                               <div>
                                 <label
-                                  htmlFor={"message"}
+                                  htmlFor={"phone"}
                                   className={labelClass}
                                 >
-                                  Message
+                                  Phone Number
                                 </label>
-                                <textarea
-                                  id={"message"}
-                                  name={"message"}
-                                  rows={"5"}
-                                  required
-                                  className={`${inputClass} resize-none`}
-                                  placeholder={"Enter your message"}
-                                ></textarea>
+                                <div className={"grid grid-cols-5 gap-2"}>
+                                  <select
+                                    defaultValue={home.defaultCountryCode}
+                                    id={"countryCode"}
+                                    name={"countryCode"}
+                                    className={
+                                      "col-span-2 px-2 py-2 md:py-3 text-xs md:text-sm border border-gray-300 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 outline-none transition-all duration-200 bg-white"
+                                    }
+                                  >
+                                    {countries.map((c, index5) => {
+                                      return (
+                                        <Fragment key={index5}>
+                                          <option value={c.code}>
+                                            {c.flag} {c.code}
+                                          </option>
+                                        </Fragment>
+                                      );
+                                    })}
+                                  </select>
+                                  <input
+                                    type={"tel"}
+                                    id={"phone"}
+                                    name={"phone"}
+                                    required
+                                    className={
+                                      "col-span-3 px-3 py-2 md:py-3 text-sm md:text-base border border-gray-300 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 outline-none transition-all duration-200 bg-white"
+                                    }
+                                    placeholder={"Phone number"}
+                                  />
+                                </div>
                               </div>
                             </div>
+
+                            <div>
+                              <label
+                                htmlFor={"message"}
+                                className={labelClass}
+                              >
+                                How Can We Help You?
+                              </label>
+                              <textarea
+                                id={"message"}
+                                name={"message"}
+                                rows={"4"}
+                                required
+                                className={`${inputClass} resize-none`}
+                                placeholder={"Tell us about your project requirements or question..."}
+                              ></textarea>
+                            </div>
+
                             <div
                               data-form-status=""
                               className={"form-status hidden"}
                               role={"status"}
                             ></div>
+
                             <div className={"pt-2 md:pt-4"}>
                               <button
                                 type={"submit"}
                                 className={
-                                  "inline-flex items-center justify-center rounded-3xl font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 text-white active:scale-95 h-10 px-4 sm:h-14 sm:px-8 sm:text-xl w-full hover:bg-[#512178] text-sm md:text-base py-2 md:py-3"
+                                  "inline-flex items-center justify-center gap-3 rounded-2xl font-bold transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 text-white active:scale-95 shadow-xl shadow-purple-900/20 hover:shadow-2xl hover:shadow-purple-900/30 hover:-translate-y-0.5 w-full text-base sm:text-lg py-3.5 px-6"
                                 }
-                                style={cssStyle("background-color: #512178")}
+                                style={cssStyle(
+                                  "background: linear-gradient(to right, #512178, #6d28d9, #4c1d95)",
+                                )}
                               >
-                                Submit
+                                <span>Send Message</span>
+                                <svg
+                                  className={"w-5 h-5 text-white"}
+                                  fill={"none"}
+                                  stroke={"currentColor"}
+                                  viewBox={"0 0 24 24"}
+                                  strokeWidth={"2"}
+                                >
+                                  <path
+                                    strokeLinecap={"round"}
+                                    strokeLinejoin={"round"}
+                                    d={
+                                      "M14 5l7 7m0 0l-7 7m7-7H3"
+                                    }
+                                  />
+                                </svg>
                               </button>
                             </div>
                           </form>

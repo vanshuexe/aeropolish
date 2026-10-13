@@ -58,7 +58,7 @@ const inquiries = {
  s('investorType','Partnership Interest',['Strategic Investors','Private Investors','Industry Partners','Business Groups','International Investors','Distribution & Market Partners','Strategic Growth Partners'],true),f('message','Tell us about your investment or partnership interest','textarea',true,{wide:true})])]}
 };
 for (const definition of Object.values(inquiries)) {
- definition.heroImage = '/prodcuts-bg/industrial-paints-pachin.webp';
+ definition.heroImage = '/new-images/industrial-paints.svg';
  definition.fields = definition.sections.flatMap(section=>section.fields);
 }
 module.exports = inquiries;

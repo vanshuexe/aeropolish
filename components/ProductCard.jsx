@@ -34,7 +34,7 @@ export default function ProductCard({ product, visible = true } = {}) {
           <img
             alt={product.productNameEn}
             loading={"lazy"}
-            className={"object-contain absolute inset-0 w-full h-full"}
+            className={"object-contain absolute inset-0 w-full h-full p-2.5"}
             src={product.imageLink}
           />
         </div>

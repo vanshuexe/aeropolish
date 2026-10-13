@@ -43,7 +43,7 @@ export default function NewsPage({ posts } = {}) {
       <div className={"min-h-screen bg-gray-50"}>
         <div
           className={
-            "relative text-center mb-12 h-[40vh] md:h-[50vh] flex items-center justify-center rounded-xl overflow-hidden w-[96%] sm:w-[98%] mx-[1%]"
+            "relative text-center mb-12 h-[40vh] md:h-[50vh] flex items-center justify-center rounded-xl overflow-hidden w-[96%] sm:w-[98%] mx-auto"
           }
           style={cssStyle("padding-top: calc(60px + 2vh); margin-top: 2vh")}
         >
