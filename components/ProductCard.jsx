@@ -108,48 +108,45 @@ export default function ProductCard({ product, visible = true } = {}) {
           ) : null}
           <div className={"mt-auto pt-3 flex gap-2"}>
             {product.pdfLinkEn ? (
-              <>
-                <SiteLink
-                  href={product.pdfLinkEn}
-                  target={"_blank"}
-                  rel={"noopener noreferrer"}
-                  className={
-                    "flex-1 text-center py-1.5 md:py-2 px-2 md:px-3 rounded-xl md:rounded-2xl text-xs md:text-sm transition-colors border-2 font-medium flex items-center justify-center gap-1"
-                  }
-                  style={cssStyle(
-                    "border-color: rgb(244, 116, 34); color: rgb(244, 116, 34); background-color: transparent",
-                  )}
+              <a
+                href={product.pdfLinkEn}
+                download={""}
+                className={
+                  "flex-1 text-center py-1.5 md:py-2 px-2 md:px-3 rounded-xl md:rounded-2xl text-xs md:text-sm transition-colors border-2 font-medium flex items-center justify-center gap-1"
+                }
+                style={cssStyle(
+                  "border-color: rgb(244, 116, 34); color: rgb(244, 116, 34); background-color: transparent",
+                )}
+              >
+                TDS
+                <svg
+                  className={"w-4 h-4"}
+                  fill={"none"}
+                  stroke={"currentColor"}
+                  viewBox={"0 0 24 24"}
                 >
-                  TDS
-                  <svg
-                    className={"w-4 h-4"}
-                    fill={"none"}
-                    stroke={"currentColor"}
-                    viewBox={"0 0 24 24"}
-                  >
-                    <path
-                      strokeLinecap={"round"}
-                      strokeLinejoin={"round"}
-                      strokeWidth={"2"}
-                      d={
-                        "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                      }
-                    ></path>
-                  </svg>
-                </SiteLink>
-                <SiteLink
-                  href={"/#contact"}
-                  className={
-                    "flex-1 text-center py-1.5 md:py-2 px-2 md:px-3 rounded-xl md:rounded-2xl text-xs md:text-sm transition-colors border-2 font-medium"
-                  }
-                  style={cssStyle(
-                    "border-color: rgb(0, 0, 0); color: rgb(0, 0, 0); background-color: rgb(255, 255, 255)",
-                  )}
-                >
-                  Interested?
-                </SiteLink>
-              </>
+                  <path
+                    strokeLinecap={"round"}
+                    strokeLinejoin={"round"}
+                    strokeWidth={"2"}
+                    d={
+                      "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    }
+                  ></path>
+                </svg>
+              </a>
             ) : null}
+            <SiteLink
+              href={"/#contact"}
+              className={
+                "flex-1 text-center py-1.5 md:py-2 px-2 md:px-3 rounded-xl md:rounded-2xl text-xs md:text-sm transition-colors border-2 font-medium"
+              }
+              style={cssStyle(
+                "border-color: rgb(0, 0, 0); color: rgb(0, 0, 0); background-color: rgb(255, 255, 255)",
+              )}
+            >
+              Interested?
+            </SiteLink>
           </div>
         </div>
       </div>

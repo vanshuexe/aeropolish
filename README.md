@@ -28,7 +28,6 @@ Use `npm run dev -- --port 3001` or `npm start -- --port 3001` to change the por
 | `/about-us` | Company, infrastructure, board, executives |
 | `/news` and `/news/[id]` | News listing and articles |
 | `/careers` | Job filters, expandable details, CV applications |
-| `/catalogs` | Catalog downloads |
 | `/tinting-center` | Center search, city/area filters, map |
 | `/our-colors` | Color families, swatches, code copying |
 | `/color-trends` | Trend collections and catalog download |

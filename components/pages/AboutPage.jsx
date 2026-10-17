@@ -96,21 +96,29 @@ export default function AboutPage() {
             </SiteLink>
           </div>
         </div>
-        <div className="mx-auto flex w-full max-w-[460px] items-end justify-center gap-4 rounded-2xl bg-[#f6f1fa] p-6 sm:gap-6">
-          <img
-            src="/new-images/aeropolish-industrial-blue.jpg"
-            alt="Aeropolish industrial quick drying paint, 20 litre drum"
-            className="w-[48%] rounded-2xl bg-white object-cover shadow-lg ring-1 ring-black/5"
-            width="909"
-            height="1024"
-          />
-          <img
-            src="/new-images/aeropolish-interior-premium.jpg"
-            alt="Aeropolish premium interior paint, 20 litre bucket"
-            className="mb-8 w-[48%] rounded-2xl bg-white object-cover shadow-lg ring-1 ring-black/5"
-            width="641"
-            height="853"
-          />
+        <div className="mx-auto flex w-full max-w-[460px] items-end justify-center gap-5 rounded-3xl bg-gradient-to-b from-[#f8f4fc] to-[#efe7f6] p-6 sm:p-8 sm:gap-7 relative">
+          <div className="product-3d-wrapper">
+            <img
+              src="/new-images/about-industrial-tin.png"
+              alt="Aeropolish industrial quick drying paint, 20 litre drum"
+              className="float-product-1 w-full h-auto object-contain select-none cursor-pointer"
+              width="900"
+              height="1000"
+              loading="lazy"
+            />
+            <div className="product-ground-shadow float-shadow-1" />
+          </div>
+          <div className="product-3d-wrapper">
+            <img
+              src="/new-images/about-interior-bucket.png"
+              alt="Aeropolish premium interior paint, 20 litre bucket"
+              className="float-product-2 w-full h-auto object-contain select-none cursor-pointer"
+              width="900"
+              height="1000"
+              loading="lazy"
+            />
+            <div className="product-ground-shadow float-shadow-2" />
+          </div>
         </div>
       </section>
 

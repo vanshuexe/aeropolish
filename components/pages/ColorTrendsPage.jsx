@@ -4,7 +4,7 @@ import { useState } from "react";
 import SiteLink from "../SiteLink";
 import { cssStyle } from "../../lib/presentation";
 
-export default function ColorTrendsPage({ catalog } = {}) {
+export default function ColorTrendsPage() {
   const [copiedCode, setCopiedCode] = useState(null);
 
   const copyToClipboard = (text, label) => {
@@ -193,20 +193,6 @@ export default function ColorTrendsPage({ catalog } = {}) {
 
           {/* CTAs */}
           <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-            {catalog && (
-              <SiteLink
-                href={catalog.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 px-7 py-3.5 text-sm sm:text-base font-bold text-white shadow-xl shadow-orange-500/25 transition-all duration-300 hover:scale-105 hover:shadow-orange-500/40 hover:from-orange-600 hover:to-amber-600 cursor-pointer"
-              >
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                <span>Download Catalogue (PDF)</span>
-              </SiteLink>
-            )}
-
             <SiteLink
               href="/color-visualizer"
               className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md border border-white/30 px-6 py-3.5 text-sm sm:text-base font-semibold text-white transition-all duration-300 hover:bg-white/25 hover:border-white/50 cursor-pointer shadow-md"
@@ -439,24 +425,10 @@ export default function ColorTrendsPage({ catalog } = {}) {
             Bring 2026 Color Trends into Your Home
           </h2>
           <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-            Order custom color samples, download our complete catalog, or test your favorite shade live on interactive 3D room surfaces.
+            Order custom color samples or test your favorite shade live on interactive 3D room surfaces.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
-            {catalog && (
-              <SiteLink
-                href={catalog.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-orange-500 hover:bg-orange-600 px-7 py-3 text-sm sm:text-base font-bold text-white shadow-lg transition-all hover:scale-105"
-              >
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                <span>Download Catalogue PDF</span>
-              </SiteLink>
-            )}
-
             <SiteLink
               href="/our-colors"
               className="inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 px-6 py-3 text-sm sm:text-base font-semibold text-white transition-all"

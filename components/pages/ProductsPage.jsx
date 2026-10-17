@@ -23,26 +23,36 @@ export default function ProductsPage({
         >
           <div
             className={
-              "w-[96%] sm:w-[98%] h-[40vh] md:h-[50vh] rounded-xl bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
+              "w-[96%] sm:w-[98%] min-h-[300px] md:min-h-[360px] rounded-xl overflow-hidden relative flex items-center"
             }
-            style={cssStyle(
-              `padding-top: calc(60px + 2vh); margin-top: 2vh; background-image: url('${category.heroImage}')`,
-            )}
+            style={{
+              marginTop: "2vh",
+              paddingTop: "calc(60px + 2vh)",
+              backgroundImage: `url('${category.heroImage}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
           >
             <div
-              className={"absolute inset-0 bg-black bg-opacity-40 rounded-xl"}
+              className={
+                "absolute inset-0 rounded-xl bg-gradient-to-r from-black/60 via-black/25 to-transparent"
+              }
             ></div>
-            <div className={"relative z-10 text-center text-white px-4"}>
+            <div
+              className={
+                "relative z-10 w-full mx-auto max-w-6xl px-6 md:px-10 py-8 text-white text-center md:text-left"
+              }
+            >
               <h1
                 className={
-                  "font-poppins text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4"
+                  "font-poppins text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 md:max-w-[45%]"
                 }
               >
                 {category.title}
               </h1>
               <p
                 className={
-                  "font-manrope text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl opacity-90 mb-4 md:mb-6 px-2"
+                  "font-manrope text-sm sm:text-base lg:text-lg opacity-95 md:max-w-[42%]"
                 }
               >
                 {category.description}

@@ -6,7 +6,7 @@ export default function Header({active=''}) {
  return <header className="site-header">
   <div className="header-bar">
    <button type="button" data-mobile-menu-open="" className="header-menu-button" aria-label="Open menu" aria-expanded="false" aria-controls="site-mobile-menu"><span /><span /><span /></button>
-   <SiteLink className="header-brand" href="/" aria-label="Aeropolish home"><img src="/aeropolish-logo.jpeg" width="1080" height="1091" alt="Aeropolish — Paints & Coating Industry" /><span>AEROPOLISH</span></SiteLink>
+   <SiteLink className="header-brand" href="/" aria-label="Aeropolish home"><img className="header-brand-logo" src="/aeropolish-navbar-logo.png" width="3964" height="855" alt="Aeropolish — Paints & Coating Industry" /></SiteLink>
    <nav className="header-desktop-nav" aria-label="Main navigation">
     {site.navigation.map(item=>item.children ? <div key={item.key} data-dropdown="" className="header-dropdown">
      <button type="button" data-dropdown-toggle="" aria-expanded="false" aria-controls={`menu-${item.key}`} className={active===item.key ? 'is-current' : ''}>{item.label}<Chevron /></button>
@@ -21,17 +21,15 @@ export default function Header({active=''}) {
       <div data-search-results="" className="header-search-results" aria-live="polite" />
      </div>
     </div>
-    <SiteLink href="/client" className="header-enquire">Enquire</SiteLink>
    </div>
   </div>
   <div id="site-mobile-menu" data-mobile-menu="" className="site-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" inert>
-   <div className="mobile-menu-heading"><SiteLink href="/" className="mobile-menu-brand" aria-label="Aeropolish home"><img src="/aeropolish-logo.jpeg" width="1080" height="1091" alt="" /><span>AEROPOLISH</span></SiteLink><button type="button" data-mobile-menu-close="" className="header-icon-button" aria-label="Close menu"><Close /></button></div>
+   <div className="mobile-menu-heading"><SiteLink href="/" className="mobile-menu-brand" aria-label="Aeropolish home"><img className="header-brand-logo" src="/aeropolish-navbar-logo.png" width="3964" height="855" alt="Aeropolish" /></SiteLink><button type="button" data-mobile-menu-close="" className="header-icon-button" aria-label="Close menu"><Close /></button></div>
    <nav aria-label="Mobile navigation">
     {site.navigation.map(item=>item.children ? <div key={item.key} data-mobile-submenu="">
      <button type="button" data-mobile-submenu-toggle="" aria-expanded="false" aria-controls={`mobile-${item.key}`} className={active===item.key ? 'is-current' : ''}>{item.label}<Chevron /></button>
      <div id={`mobile-${item.key}`} data-mobile-submenu-items="" className="hidden">{item.children.map(child=><SiteLink key={child.href} href={child.href}>{child.label}</SiteLink>)}</div>
     </div> : <SiteLink key={item.key} href={item.href} aria-current={active===item.key ? 'page' : undefined}>{item.label}</SiteLink>)}
-    <div className="mobile-business-links"><SiteLink href="/client" className="mobile-menu-cta">Send an enquiry</SiteLink></div>
    </nav>
   </div>
  </header>;

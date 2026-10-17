@@ -1,5 +1,4 @@
 import content from "../../config/company";
-import PageBanner from "../PageBanner";
 import SiteLink from "../SiteLink";
 
 const vision = content.company.find((section) => section.title === "Our Vision");
@@ -13,11 +12,19 @@ export default function VisionPage() {
   return (
     <div className="bg-white font-manrope text-gray-900">
       <div className="px-3 pt-4 sm:px-4">
-        <PageBanner as="h1" tall image="/new-images/interior-paints.svg" title="Our Vision" tagline={tagline} />
+        <h1 className="sr-only">Our Vision</h1>
+        <img
+          src="/new-images/our-vision-banner.webp"
+          alt="Our Vision: from India to the world. Global expansion, strong partnerships, innovative solutions, diverse industries, quality without compromise and a sustainable tomorrow."
+          width="1983"
+          height="793"
+          className="mx-auto block h-auto w-full max-w-[1500px] rounded-xl bg-white"
+        />
       </div>
 
       <section className="mx-auto max-w-4xl px-5 py-12 sm:px-8 sm:py-16">
-        <p className="font-poppins text-xl font-semibold leading-relaxed text-[#2a1442] sm:text-2xl">{statement}</p>
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#f47422]">{tagline}</p>
+        <p className="mt-4 font-poppins text-xl font-semibold leading-relaxed text-[#2a1442] sm:text-2xl">{statement}</p>
       </section>
 
       <section className="border-t border-gray-200">

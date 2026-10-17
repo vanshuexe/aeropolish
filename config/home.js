@@ -13,10 +13,11 @@ module.exports = {
       icon: `${STORAGE}/hero/icon-button-pachin.png`,
     },
     slides: [
-      "/new-images/hero-1.jpg",
-      "/new-images/hero-2.jpg",
-      "/new-images/hero-4.jpg",
-      "/new-images/hero-5.jpg",
+      "https://ik.imagekit.io/kirgb3odmp/hotel/Premium%20Paints,%20Brighter%20Homes.png",
+      "https://ik.imagekit.io/kirgb3odmp/hotel/Aeropolish%20Premium%20Interior%20Paint%20Banner.png",
+      "/home/hero-green-bedroom.webp",
+      "/home/hero-orange-living-room.webp",
+      "/home/hero-yellow-living-room.webp",
     ],
   },
 
@@ -24,7 +25,8 @@ module.exports = {
     {
       label: "Interior Paints",
       href: "/interior-paints",
-      image: "/new-images/product-interior.jpg",
+      image: "/home/interior-teal-living-room.webp",
+      cover: true,
       tagline: "Luxury Emulsions & Washable Finishes",
       badge: "Interior",
       categoryKey: "interior",
@@ -32,7 +34,8 @@ module.exports = {
     {
       label: "Exterior Paints",
       href: "/exterior-paints",
-      image: "/new-images/product-exterior.jpg",
+      image: "/home/exterior-yellow-house.webp",
+      cover: true,
       tagline: "All-Weather Shields & UV Defense",
       badge: "Exterior",
       categoryKey: "exterior",
@@ -40,31 +43,12 @@ module.exports = {
     {
       label: "Industrial Paints",
       href: "/industrial-paints",
-      image: "/new-images/product-industrial.jpg",
+      image: "https://ik.imagekit.io/kirgb3odmp/wall/Industrial%20paints.png",
       tagline: "High-Performance Epoxy & Protective Coatings",
       badge: "Industrial",
       categoryKey: "industrial",
     },
-    {
-      label: "Inks",
-      href: "/ink",
-      image: "/new-images/product-inks.jpg",
-      tagline: "Speciality Screen & Packaging Inks",
-      badge: "Inks",
-      categoryKey: "inks",
-    },
   ],
-
-  creativitySlides: [
-    "2%20(2)%20(2)",
-    "2%20(6)%20(2)",
-    "2%20(3)%20(2)",
-    "2%20(8)%20(3)",
-  ].map(
-    (suffix) =>
-      `${STORAGE}/second-slider/interior-design-with-orange-colors-dcsjdt9qbnwjier1%20${suffix}.webp`,
-  ),
-  creativityOverlay: `${STORAGE}/second-slider/03.png`,
 
   images: {
     smart: "/new-images/special-paint-effects.webp",
@@ -72,55 +56,37 @@ module.exports = {
     contact: "/new-images/contact-aeropolish.webp",
   },
 
-  // "Stronger Prints" ink section (mobile slider; the desktop grid uses the same items)
-  inks: [
+  // "Stronger Paints, Brighter Results" section (mobile slider; the desktop grid uses the same items)
+  paints: [
     {
-      label: "Offset Inks",
-      category: "Commercial & Press",
-      subtitle: "Books, magazines & commercial sheetfed presses",
-      tag: "High Mileage",
-      href: "/ink?subcategory=Offset%20Inks",
-      image: "/Offset%20-.png",
+      label: "Royal Velvet Interior Emulsion",
+      href: "/interior-paints",
+      image: "/new-images/aeropolish-royal-velvet-purple.jpg",
     },
     {
-      label: "Flexo",
-      category: "Cartons & Labels",
-      subtitle: "Corrugated boxes, labels & packaging reels",
-      tag: "Fast Drying",
-      href: "/ink?subcategory=Flexo%20%26%20Rotogravure",
-      image: "/StrongerPrintsSection/Flexo.webp",
+      label: "Easy Clean Washable Paint",
+      href: "/interior-paints",
+      image: "/new-images/aeropolish-easyclean-golden.jpg",
     },
     {
-      label: "Silk Screen",
-      category: "Precision Mesh",
-      subtitle: "Graphic signage, glass & specialty tactile media",
-      tag: "High Opacity",
-      href: "/ink?subcategory=Silk%20Screen",
-      image: "/StrongerPrintsSection/Silk%20Screen.webp",
+      label: "Industrial Quick Drying Paint",
+      href: "/industrial-paints",
+      image: "/new-images/aeropolish-industrial-blue.jpg",
     },
     {
-      label: "Metal Coating",
-      category: "Can & Packaging",
-      subtitle: "Food cans, beverage tins, caps & aerosols",
-      tag: "Anti-Corrosion",
-      href: "/ink?subcategory=Can%20Coating",
-      image: "/new-images/metal-aeropolish.png",
+      label: "Exterior Emulsion",
+      href: "/exterior-paints",
+      image: "/new-images/aeropolish-exterior-emulsion.jpg",
     },
     {
-      label: "Rotogravure",
-      category: "Flexible Packaging",
-      subtitle: "High-volume pouches, wraps & laminate films",
-      tag: "Ultra-Sharp",
-      href: "/ink",
-      image: "/Rectangle%20889595.png",
+      label: "Water Based Home Paint",
+      href: "/exterior-paints",
+      image: "/new-images/aeropolish-home-paint.jpg",
     },
     {
-      label: "Textile",
-      category: "Apparel & Fabrics",
-      subtitle: "Direct-to-garment, cotton & fabric blends",
-      tag: "Wash Fastness",
-      href: "/ink",
-      image: "/Tixtile.png",
+      label: "Weather Shield Acrylic Paint",
+      href: "/exterior-paints",
+      image: "/new-images/aeropolish-weathershield-ruby.jpg",
     },
   ],
 

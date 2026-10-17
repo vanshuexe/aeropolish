@@ -8,7 +8,6 @@ const pages = [
   "/about-us",
   "/news",
   "/careers",
-  "/catalogs",
   "/tinting-center",
   "/our-colors",
   "/color-trends",

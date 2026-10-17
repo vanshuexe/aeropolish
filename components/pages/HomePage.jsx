@@ -76,175 +76,31 @@ function ProductSectionCard({ tile }) {
   return (
     <SiteLink
       href={tile.href}
-      className="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col justify-end border border-gray-200/80 bg-gray-900 h-[380px] sm:h-[420px] lg:h-[480px] xl:h-[510px] w-full block cursor-pointer"
+      aria-label={tile.label}
+      className={"home-product-card cursor-pointer" + (tile.cover ? " home-product-card--cover" : "")}
     >
-      {/* Background Image */}
       <img
         alt={tile.label}
+        width={404}
+        height={571}
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
         src={tile.image}
       />
-
-      {/* Dark Gradient Overlay for Readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10 pointer-events-none transition-opacity duration-300" />
-
-      {/* Subtle Warm Hover Tint */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity duration-500 bg-orange-500 pointer-events-none" />
-
-      {/* Top Category Badge with SVG Icon */}
-      <div className="absolute top-4 left-4 z-20 backdrop-blur-md bg-white/95 shadow-md border border-white/70 px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-bold text-gray-800 transition-all duration-300 group-hover:bg-white group-hover:shadow-lg group-hover:scale-105">
-        {getCategoryIcon(tile.categoryKey)}
-        <span>{tile.badge || tile.label}</span>
-      </div>
-
-      {/* Bottom Content */}
-      <div className="relative z-20 p-5 sm:p-6 text-white flex flex-col justify-end w-full">
-        <h3 className="text-xl sm:text-2xl font-bold font-poppins text-white tracking-tight group-hover:text-orange-400 transition-colors duration-300 drop-shadow-sm">
+      {tile.cover ? (
+        <span className="home-product-card__label">
           {tile.label}
-        </h3>
-        {tile.tagline && (
-          <p className="text-xs sm:text-sm text-gray-200 font-manrope mt-1.5 line-clamp-2 leading-relaxed">
-            {tile.tagline}
-          </p>
-        )}
-        <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between text-xs sm:text-sm font-semibold text-white/90 group-hover:text-orange-400 transition-colors">
-          <span>Explore Range</span>
-          <span className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 group-hover:translate-x-1 shadow-sm">
-            <svg
-              className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth="2.5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </span>
-        </div>
-      </div>
+          <span className="home-product-card__arrow" aria-hidden="true">&rarr;</span>
+        </span>
+      ) : null}
     </SiteLink>
   );
 }
 
-function InkProcessIcon({ type, className = "w-4 h-4" }) {
-  switch (type) {
-    case "Offset Inks":
-      return (
-        <svg
-          className={className}
-          viewBox={"0 0 24 24"}
-          fill={"none"}
-          stroke={"currentColor"}
-          strokeWidth={"2"}
-          strokeLinecap={"round"}
-          strokeLinejoin={"round"}
-        >
-          <rect x={"2"} y={"6"} width={"20"} height={"8"} rx={"2"} />
-          <path d={"M6 14v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4"} />
-          <circle cx={"12"} cy={"10"} r={"1.5"} />
-        </svg>
-      );
-    case "Flexo":
-      return (
-        <svg
-          className={className}
-          viewBox={"0 0 24 24"}
-          fill={"none"}
-          stroke={"currentColor"}
-          strokeWidth={"2"}
-          strokeLinecap={"round"}
-          strokeLinejoin={"round"}
-        >
-          <path
-            d={
-              "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-            }
-          />
-          <polyline points={"3.27 6.96 12 12.01 20.73 6.96"} />
-          <line x1={"12"} y1={"22.08"} x2={"12"} y2={"12"} />
-        </svg>
-      );
-    case "Silk Screen":
-      return (
-        <svg
-          className={className}
-          viewBox={"0 0 24 24"}
-          fill={"none"}
-          stroke={"currentColor"}
-          strokeWidth={"2"}
-          strokeLinecap={"round"}
-          strokeLinejoin={"round"}
-        >
-          <rect x={"3"} y={"3"} width={"18"} height={"18"} rx={"2"} />
-          <path d={"M3 15l6-6 4 4 8-8"} />
-          <path d={"M7 19l4-4"} />
-        </svg>
-      );
-    case "Metal Coating":
-      return (
-        <svg
-          className={className}
-          viewBox={"0 0 24 24"}
-          fill={"none"}
-          stroke={"currentColor"}
-          strokeWidth={"2"}
-          strokeLinecap={"round"}
-          strokeLinejoin={"round"}
-        >
-          <path d={"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"} />
-          <path d={"m9 12 2 2 4-4"} />
-        </svg>
-      );
-    case "Rotogravure":
-      return (
-        <svg
-          className={className}
-          viewBox={"0 0 24 24"}
-          fill={"none"}
-          stroke={"currentColor"}
-          strokeWidth={"2"}
-          strokeLinecap={"round"}
-          strokeLinejoin={"round"}
-        >
-          <rect x={"5"} y={"2"} width={"14"} height={"20"} rx={"3"} />
-          <path d={"M9 7h6"} />
-          <path d={"M8 12h8"} />
-          <path d={"M9 17h6"} />
-        </svg>
-      );
-    case "Textile":
-      return (
-        <svg
-          className={className}
-          viewBox={"0 0 24 24"}
-          fill={"none"}
-          stroke={"currentColor"}
-          strokeWidth={"2"}
-          strokeLinecap={"round"}
-          strokeLinejoin={"round"}
-        >
-          <path
-            d={
-              "M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"
-            }
-          />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
-
-function InkGridCard({ ink, style }) {
-  if (!ink) return null;
+function PaintGridCard({ paint, style, compact = false }) {
+  if (!paint) return null;
   return (
     <SiteLink
-      href={ink.href}
+      href={paint.href}
       className={
         "group relative flex flex-col justify-end rounded-2xl md:rounded-3xl overflow-hidden bg-gray-900 border border-gray-200/80 hover:border-blue-400 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 cursor-pointer block w-full"
       }
@@ -252,12 +108,12 @@ function InkGridCard({ ink, style }) {
     >
       {/* Background Image */}
       <img
-        alt={ink.label}
+        alt={paint.label}
         loading={"lazy"}
         className={
           "object-cover absolute inset-0 w-full h-full transform group-hover:scale-108 transition-transform duration-700 ease-out"
         }
-        src={ink.image}
+        src={paint.image}
       />
 
       {/* Layered Gradient for Contrast */}
@@ -266,16 +122,6 @@ function InkGridCard({ ink, style }) {
           "absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 opacity-75 group-hover:opacity-90 transition-opacity duration-300 pointer-events-none"
         }
       />
-
-      {/* Top-Left Process Tag Badge */}
-      <div
-        className={
-          "absolute top-3 sm:top-4 left-3 sm:left-4 z-10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/20 shadow-sm text-white text-xs font-semibold tracking-wide"
-        }
-      >
-        <InkProcessIcon type={ink.label} className={"w-3.5 h-3.5 text-blue-300"} />
-        <span>{ink.category || ink.label}</span>
-      </div>
 
       {/* Top-Right Hover Action Arrow */}
       <div
@@ -299,44 +145,24 @@ function InkGridCard({ ink, style }) {
       </div>
 
       {/* Bottom Content Area */}
-      <div className={"relative z-10 p-4 sm:p-5 md:p-6 text-left"}>
-        <div className={"flex items-center justify-between gap-2"}>
-          <h3
-            className={
-              "font-poppins font-bold text-white text-lg sm:text-xl lg:text-2xl drop-shadow-md group-hover:text-blue-300 transition-colors"
-            }
-          >
-            {ink.label}
-          </h3>
-          {ink.tag && (
-            <span
-              className={
-                "px-2.5 py-0.5 rounded-md bg-white/20 backdrop-blur-md border border-white/30 text-white text-[11px] font-medium tracking-wide flex-shrink-0"
-              }
-            >
-              {ink.tag}
-            </span>
-          )}
-        </div>
-        {ink.subtitle && (
-          <p
-            className={
-              "text-gray-200 text-xs sm:text-sm font-manrope mt-1.5 leading-snug line-clamp-2 drop-shadow"
-            }
-          >
-            {ink.subtitle}
-          </p>
-        )}
+      <div className={compact ? "relative z-10 p-3 text-left" : "relative z-10 p-4 sm:p-5 md:p-6 text-left"}>
+        <h3
+          className={
+            compact
+              ? "font-poppins font-bold text-white text-sm sm:text-base leading-snug drop-shadow-md group-hover:text-blue-300 transition-colors"
+              : "font-poppins font-bold text-white text-lg sm:text-xl lg:text-2xl drop-shadow-md group-hover:text-blue-300 transition-colors"
+          }
+        >
+          {paint.label}
+        </h3>
       </div>
     </SiteLink>
   );
 }
 
 export default function HomePage({ home, countries } = {}) {
-  const inkBy = Object.fromEntries(home.inks.map((ink) => [ink.label, ink]));
+  const paintBy = Object.fromEntries(home.paints.map((paint) => [paint.label, paint]));
   const aboutParagraphs = company.company.find((section) => section.title === "About Us").paragraphs;
-  const visionTagline = company.company.find((section) => section.title === "Our Vision").paragraphs[0];
-  const missionTagline = company.company.find((section) => section.title === "Our Mission").paragraphs[0];
   const sectionHeading =
     "sm:text-3xl font-bold font-poppins text-black text-2xl md:text-3xl lg:text-4xl";
   const sectionStyle =
@@ -355,91 +181,37 @@ export default function HomePage({ home, countries } = {}) {
           >
             {/* Hero slider */}
             <div style={cssStyle("flex-shrink: 0")}>
-              <section
+              <div
                 data-slider=""
                 data-interval={"5000"}
-                className={
-                  "relative h-[70vh] md:h-[80vh] lg:h-[85vh] xl:h-[95vh] overflow-hidden"
-                }
-                style={cssStyle(
-                  "padding-top: calc(50px + 1.5vh); margin-top: 1.5vh",
-                )}
               >
-                {home.hero.slides.map((src, i) => {
-                  return (
-                    <Fragment key={i}>
-                      <div
-                        data-slide=""
-                        className={`absolute inset-0 transition-opacity duration-1000 flex items-center justify-center w-[96%] sm:w-[98%] h-[98%] mx-auto rounded-[20px] ${i === 0 ? "opacity-100" : "opacity-0"}`}
-                        style={cssStyle(
-                          "top: 0px; left: 1%; right: 1%; bottom: 20px",
-                        )}
-                      >
-                        <div className={"relative w-full h-full group"}>
+                <section className={"hero-slider-section"}>
+                  {home.hero.slides.map((src, i) => {
+                    return (
+                      <Fragment key={i}>
+                        <div
+                          data-slide=""
+                          className={`absolute inset-0 bg-white transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}`}
+                        >
                           <img
                             alt={`Slide ${i + 1}`}
-                            loading={"lazy"}
-                            className={
-                              "object-cover w-full h-full rounded-[20px] absolute inset-0"
-                            }
+                            loading={i === 0 ? "eager" : "lazy"}
                             src={src}
                           />
-                          {/* Dark scrim so the headline stays readable on bright photos */}
-                          <div className={"absolute inset-0 rounded-[20px] bg-gradient-to-b from-black/35 via-black/55 to-black/35"} />
                         </div>
-                      </div>
-                    </Fragment>
-                  );
-                })}
-                <div
-                  className={
-                    "absolute inset-0 flex flex-col items-center justify-center z-20"
-                  }
-                >
+                      </Fragment>
+                    );
+                  })}
+                  <SiteLink
+                    href={home.hero.button.href}
+                    className={"absolute inset-0 z-10"}
+                    aria-label={"Explore Products"}
+                  />
                   <div
                     className={
-                      "text-center mb-4 md:mb-6 px-4 transition-opacity duration-1000"
+                      "absolute bottom-2 left-1/2 transform -translate-x-1/2 z-20 flex space-x-1.5 sm:space-x-2"
                     }
                   >
-                    <h1
-                      className={
-                        "font-bold font-poppins text-white drop-shadow-lg mb-2 md:mb-4 text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl"
-                      }
-                      style={cssStyle("text-shadow: 0 2px 12px rgba(0,0,0,0.55)")}
-                    >
-                      {home.hero.title}
-                    </h1>
-                    <p
-                      className={
-                        "font-manrope text-xs sm:text-sm md:text-sm lg:text-base xl:text-lg text-white drop-shadow-lg font-medium"
-                      }
-                      style={cssStyle("text-shadow: 0 1px 8px rgba(0,0,0,0.6)")}
-                    >
-                      {home.hero.subtitle}
-                    </p>
-                  </div>
-                  <SiteLink
-                    className={
-                      "px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 text-xs sm:text-sm md:text-base lg:text-lg rounded-full font-semibold text-white transition-all duration-200 hover:opacity-90 hover:scale-105 flex items-center gap-1.5 md:gap-2 lg:gap-3"
-                    }
-                    style={cssStyle("background-color: #512178")}
-                    href={home.hero.button.href}
-                  >
-                    {home.hero.button.label}
-                    <img
-                      alt={""}
-                      width={"24"}
-                      height={"24"}
-                      className={"w-4 h-4 sm:w-6 sm:h-6"}
-                      src={home.hero.button.icon}
-                    />
-                  </SiteLink>
-                </div>
-                <div
-                  className={
-                    "absolute bottom-4 sm:bottom-12 lg:bottom-24 left-1/2 transform -translate-x-1/2 z-20 flex space-x-1 sm:space-x-2"
-                  }
-                >
                   {home.hero.slides.map((src, i) => {
                     return (
                       <Fragment key={i}>
@@ -447,110 +219,87 @@ export default function HomePage({ home, countries } = {}) {
                           type={"button"}
                           data-slide-dot=""
                           aria-label={`Show slide ${i + 1}`}
-                          className={`hero-dot w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-200 ${i === 0 ? "bg-[#512178]" : "bg-white bg-opacity-50 hover:bg-opacity-75"}`}
+                          className={`hero-dot w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-200 ${i === 0 ? "bg-[#512178]" : "bg-white bg-opacity-70 hover:bg-opacity-100 shadow-sm"}`}
                         ></button>
                       </Fragment>
                     );
                   })}
-                </div>
-              </section>
+                  </div>
+                </section>
+              </div>
             </div>
 
             {/* About Aeropolish Section */}
-            <section className={"w-full bg-white"}>
+            <section className={"w-full bg-gray-200"}>
               <div className={"mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-20"}>
                 <div className={"grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16"}>
                   <div>
                     <p className={"text-sm font-bold uppercase tracking-[0.2em] text-[#f47422]"}>About us</p>
                     <h2 className={`${sectionHeading} mt-3`}>About Aeropolish</h2>
-                    <div className={"mt-5 space-y-4 text-[15px] leading-[1.8] text-gray-700 sm:text-base"}>
-                      {aboutParagraphs.slice(0, 2).map((text) => (
-                        <p key={text}>{text}</p>
-                      ))}
+                    <div className={"mt-5 text-[15px] leading-[1.7] text-gray-700 sm:text-base"}>
+                      {/* Mobile responsive only: concise 2-3 liner */}
+                      <p className={"block sm:hidden leading-relaxed"}>
+                        Aeropolish is an emerging Indian paint and coatings company delivering reliable, high-performance solutions for decorative, commercial, and industrial applications.
+                      </p>
+                      {/* Desktop: full descriptive paragraphs */}
+                      <div className={"hidden sm:block space-y-4 leading-[1.8]"}>
+                        {aboutParagraphs.slice(0, 2).map((text) => (
+                          <p key={text}>{text}</p>
+                        ))}
+                      </div>
                     </div>
                     <SiteLink
                       href={"/about-us"}
-                      className={"mt-7 inline-flex min-h-[48px] items-center rounded-xl bg-[#512178] px-6 text-sm font-bold text-white transition-colors hover:bg-[#431b64]"}
+                      className={"mt-5 sm:mt-7 inline-flex min-h-[44px] sm:min-h-[48px] items-center rounded-xl bg-[#512178] px-6 text-sm font-bold text-white transition-colors hover:bg-[#431b64]"}
                     >
                       Read more about us
                     </SiteLink>
                   </div>
-                  <div className={"mx-auto flex w-full max-w-[460px] items-end justify-center gap-4 rounded-2xl bg-[#f6f1fa] p-6 sm:gap-6"}>
-                    <img
-                      src={"/new-images/aeropolish-industrial-blue.jpg"}
-                      alt={"Aeropolish industrial quick drying paint, 20 litre drum"}
-                      className={"w-[48%] rounded-2xl bg-white object-cover shadow-lg ring-1 ring-black/5"}
-                      width={"909"}
-                      height={"1024"}
-                      loading={"lazy"}
-                    />
-                    <img
-                      src={"/new-images/aeropolish-interior-premium.jpg"}
-                      alt={"Aeropolish premium interior paint, 20 litre bucket"}
-                      className={"mb-8 w-[48%] rounded-2xl bg-white object-cover shadow-lg ring-1 ring-black/5"}
-                      width={"641"}
-                      height={"853"}
-                      loading={"lazy"}
-                    />
+                  <div className={"mx-auto flex w-full max-w-[460px] items-end justify-center gap-5 rounded-3xl bg-gradient-to-b from-[#f8f4fc] to-[#efe7f6] p-6 sm:p-8 sm:gap-7 relative"}>
+                    <div className={"product-3d-wrapper"}>
+                      <img
+                        src={"/new-images/about-industrial-tin.png"}
+                        alt={"Aeropolish industrial quick drying paint, 20 litre drum"}
+                        className={"float-product-1 w-full h-auto object-contain select-none cursor-pointer"}
+                        width={"900"}
+                        height={"1000"}
+                        loading={"lazy"}
+                      />
+                      <div className={"product-ground-shadow float-shadow-1"} />
+                    </div>
+                    <div className={"product-3d-wrapper"}>
+                      <img
+                        src={"/new-images/about-interior-bucket.png"}
+                        alt={"Aeropolish premium interior paint, 20 litre bucket"}
+                        className={"float-product-2 w-full h-auto object-contain select-none cursor-pointer"}
+                        width={"900"}
+                        height={"1000"}
+                        loading={"lazy"}
+                      />
+                      <div className={"product-ground-shadow float-shadow-2"} />
+                    </div>
                   </div>
                 </div>
-
-                <div className={"mt-12 grid gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 sm:mt-16 md:grid-cols-2"}>
-                  {[
-                    { href: "/our-vision", label: "Our Vision", text: visionTagline },
-                    { href: "/our-mission", label: "Our Mission", text: missionTagline },
-                  ].map((item) => (
-                    <SiteLink
-                      key={item.href}
-                      href={item.href}
-                      className={"group flex items-center justify-between gap-6 bg-white p-6 transition-colors hover:bg-[#f6f1fa] sm:p-8"}
-                    >
-                      <span>
-                        <span className={"block font-poppins text-xl font-bold text-[#2a1442]"}>{item.label}</span>
-                        <span className={"mt-1.5 block text-[15px] leading-relaxed text-gray-600"}>{item.text}</span>
-                      </span>
-                      <span className={"flex-shrink-0 text-xl text-[#512178] transition-transform group-hover:translate-x-1"} aria-hidden={"true"}>→</span>
-                    </SiteLink>
-                  ))}
-                </div>
-
-                <p className={"mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#512178]"}>
-                  <SiteLink href={"/client"} className={"hover:underline"}>Client inquiry</SiteLink>
-                  <SiteLink href={"/vendor"} className={"hover:underline"}>Become a vendor</SiteLink>
-                  <SiteLink href={"/investor"} className={"hover:underline"}>Investment &amp; partnerships</SiteLink>
-                </p>
               </div>
             </section>
             <div
-              className={"py-8"}
+              className={"home-products-section py-8"}
               style={cssStyle(
                 "flex-shrink: 0; padding-top: 2rem; padding-bottom: 2rem",
               )}
             >
-              <div className={"w-[96%] sm:w-[98%] mx-auto"}>
+              <div className={"w-[96%] sm:w-[98%] mx-auto max-w-7xl"}>
                 <section className={"relative w-full h-full flex flex-col"}>
                   <div
                     className={
-                      "w-[96%] mx-auto px-2 sm:px-4 flex-1 flex flex-col justify-center"
+                      "w-full flex-1 flex flex-col justify-center"
                     }
                     style={cssStyle("max-width: none")}
                   >
                     <div className={"text-center mb-6 md:mb-10 px-2"}>
-                      <div
-                        className={
-                          "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-orange-50 text-orange-600 border border-orange-200/60 mb-3 shadow-xs"
-                        }
-                      >
-                        <span
-                          className={
-                            "w-2 h-2 rounded-full bg-orange-500 animate-pulse"
-                          }
-                        ></span>
-                        Engineered Coating Solutions
-                      </div>
                       <h2
                         className={
-                          "text-3xl sm:text-4xl lg:text-5xl font-extrabold font-poppins text-gray-900 tracking-tight mb-3"
+                          "home-products-title text-3xl sm:text-4xl lg:text-5xl font-extrabold font-poppins text-gray-900 tracking-tight mb-3"
                         }
                       >
                         Products
@@ -569,7 +318,7 @@ export default function HomePage({ home, countries } = {}) {
                         >
                           Decorative
                         </SiteLink>
-                        {", "}
+                        {" and "}
                         <SiteLink
                           className={
                             "text-orange-500 hover:text-orange-600 font-semibold hover:underline transition-colors"
@@ -577,24 +326,15 @@ export default function HomePage({ home, countries } = {}) {
                           href={"/industrial-paints"}
                         >
                           Industrial
-                        </SiteLink>
-                        {", and "}
-                        <SiteLink
-                          className={
-                            "text-orange-500 hover:text-orange-600 font-semibold hover:underline transition-colors"
-                          }
-                          href={"/ink"}
-                        >
-                          Inks
                         </SiteLink>{" "}
                         formulated for durability, color brilliance, and protection.
                       </p>
                     </div>
 
-                    {/* Desktop: 4 Columns Grid */}
+                    {/* Desktop: 3 Columns Grid */}
                     <div
                       className={
-                        "hidden lg:grid grid-cols-4 gap-5 xl:gap-6 w-full"
+                        "hidden lg:grid grid-cols-3 gap-6 w-full"
                       }
                     >
                       {home.productTiles.map((tile, index0) => (
@@ -605,7 +345,7 @@ export default function HomePage({ home, countries } = {}) {
                       ))}
                     </div>
 
-                    {/* Tablet: 2x2 Grid */}
+                    {/* Tablet: 2 Columns Grid */}
                     <div
                       className={
                         "hidden md:grid lg:hidden grid-cols-2 gap-5 w-full"
@@ -620,15 +360,21 @@ export default function HomePage({ home, countries } = {}) {
                     </div>
 
                     {/* Mobile: Horizontal Snap Carousel */}
-                    <div className={"md:hidden relative w-full"}>
+                    <div
+                      className={"md:hidden relative w-full"}
+                      data-product-carousel=""
+                    >
                       <div
                         className={
                           "flex gap-4 overflow-x-auto pb-4 pt-1 px-1 snap-x snap-mandatory scrollbar-hide"
                         }
+                        id={"home-product-carousel-track"}
+                        data-product-track=""
                       >
                         {home.productTiles.map((tile, index2) => (
                           <div
                             key={tile.label || index2}
+                            data-product-slide=""
                             className={
                               "flex-shrink-0 w-[84vw] sm:w-[320px] snap-center"
                             }
@@ -637,120 +383,46 @@ export default function HomePage({ home, countries } = {}) {
                           </div>
                         ))}
                       </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            </div>
-
-            {/* Unleash Your Creativity (catalogs) */}
-            <div className={"w-full"} style={cssStyle(sectionStyle)}>
-              <div
-                className={"text-center px-2"}
-                style={cssStyle("padding-bottom: 2rem")}
-              >
-                <h2 className={sectionHeading}>Unleash Your Creativity</h2>
-              </div>
-              <div
-                className={
-                  "relative w-[96%] sm:w-[98%] mx-auto rounded-2xl md:rounded-3xl overflow-hidden"
-                }
-                style={cssStyle(
-                  "height: clamp(400px, 500px, 758px); min-height: clamp(400px, 500px, 758px)",
-                )}
-              >
-                <section
-                  data-slider=""
-                  data-interval={"3000"}
-                  className={"relative h-full flex items-center justify-center"}
-                >
-                  <div
-                    className={
-                      "relative w-[98%] h-full overflow-hidden rounded-[20px] px-[20%] sm:px-0"
-                    }
-                  >
-                    {home.creativitySlides.map((src, i) => {
-                      return (
-                        <Fragment key={i}>
-                          <div
-                            data-slide=""
-                            className={`absolute inset-0 transition-opacity duration-300 ${i === 0 ? "opacity-100" : "opacity-0"}`}
-                          >
-                            <div
-                              className={
-                                "absolute inset-0 flex items-center justify-center"
-                              }
-                            >
-                              <div
-                                className={
-                                  "w-full h-[96%] relative overflow-hidden rounded-[20px]"
-                                }
-                              >
-                                <img
-                                  alt={`Interior Design ${i + 1}`}
-                                  loading={"lazy"}
-                                  className={
-                                    "object-cover rounded-[20px] absolute inset-0 w-full h-full"
-                                  }
-                                  src={src}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </Fragment>
-                      );
-                    })}
-                    <div className={"absolute inset-0 z-10"}>
-                      <img
-                        alt={""}
-                        loading={"lazy"}
-                        className={
-                          "object-cover rounded-[20px] absolute inset-0 w-full h-full"
-                        }
-                        src={home.creativityOverlay}
-                      />
-                    </div>
-                    <div
-                      className={
-                        "absolute top-6 sm:top-10 left-1/2 sm:left-8 z-20 pt-1 sm:pt-2 lg:pt-8 text-center sm:text-left px-2 transform -translate-x-1/2 sm:translate-x-0"
-                      }
-                    >
-                      <h2
-                        className={
-                          "font-bold font-poppins text-white drop-shadow-lg mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl"
-                        }
-                      >
-                        Unleash Your Creativity
-                      </h2>
-                      <SiteLink
-                        className={
-                          "flex items-center justify-center sm:justify-start gap-2 md:gap-3 hover:opacity-80 transition-opacity cursor-pointer"
-                        }
-                        href={"/catalogs"}
-                      >
-                        <p
-                          className={
-                            "font-manrope text-xs sm:text-sm md:text-base lg:text-lg text-white drop-shadow-lg"
-                          }
+                      <div className={"product-carousel-controls"}>
+                        <button
+                          type={"button"}
+                          data-product-scroll={"previous"}
+                          aria-label={"Previous products"}
+                          aria-controls={"home-product-carousel-track"}
+                          className={"product-carousel-button"}
                         >
-                          Get Inspired by our catalogs
-                        </p>
-                        <div className={"text-white drop-shadow-lg"}>
                           <svg
-                            width={"24"}
-                            height={"24"}
+                            aria-hidden={"true"}
                             viewBox={"0 0 24 24"}
                             fill={"none"}
                             stroke={"currentColor"}
                             strokeWidth={"2"}
                             strokeLinecap={"round"}
                             strokeLinejoin={"round"}
-                            className={"w-6 h-6"}
                           >
-                            <path d={"M9 18l6-6-6-6"}></path>
+                            <path d={"m15 18-6-6 6-6"} />
                           </svg>
-                        </div>
-                      </SiteLink>
+                        </button>
+                        <button
+                          type={"button"}
+                          data-product-scroll={"next"}
+                          aria-label={"Next products"}
+                          aria-controls={"home-product-carousel-track"}
+                          className={"product-carousel-button"}
+                        >
+                          <svg
+                            aria-hidden={"true"}
+                            viewBox={"0 0 24 24"}
+                            fill={"none"}
+                            stroke={"currentColor"}
+                            strokeWidth={"2"}
+                            strokeLinecap={"round"}
+                            strokeLinejoin={"round"}
+                          >
+                            <path d={"m9 18 6-6-6-6"} />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </section>
@@ -760,28 +432,6 @@ export default function HomePage({ home, countries } = {}) {
             {/* Special Paint Effects */}
             <div className={"w-full"} style={cssStyle(sectionStyle)}>
               <div className={"text-center mb-6 md:mb-10 px-2"}>
-                <div
-                  className={
-                    "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-orange-50 text-orange-600 border border-orange-200/60 mb-3 shadow-xs"
-                  }
-                >
-                  <svg
-                    className={"w-3.5 h-3.5 text-orange-500"}
-                    viewBox={"0 0 24 24"}
-                    fill={"none"}
-                    stroke={"currentColor"}
-                    strokeWidth={"2.2"}
-                  >
-                    <path
-                      strokeLinecap={"round"}
-                      strokeLinejoin={"round"}
-                      d={
-                        "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"
-                      }
-                    />
-                  </svg>
-                  Luxury Decorative Finishes
-                </div>
                 <h2
                   className={
                     "text-3xl sm:text-4xl lg:text-5xl font-extrabold font-poppins text-gray-900 tracking-tight mb-3"
@@ -789,15 +439,6 @@ export default function HomePage({ home, countries } = {}) {
                 >
                   Special Paint Effects
                 </h2>
-                <p
-                  className={
-                    "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed"
-                  }
-                >
-                  Turn ordinary walls into tactile art with our premium Smart
-                  collection — shimmering metallics, soft velvet textures, and
-                  rich rustic mineral finishes.
-                </p>
               </div>
 
               <div
@@ -837,26 +478,6 @@ export default function HomePage({ home, countries } = {}) {
                     }
                   >
                     <div>
-                      {/* Top Collection Badge */}
-                      <div
-                        className={
-                          "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold uppercase tracking-wider mb-4 shadow-sm"
-                        }
-                      >
-                        <svg
-                          className={"w-3.5 h-3.5 text-amber-400"}
-                          fill={"currentColor"}
-                          viewBox={"0 0 20 20"}
-                        >
-                          <path
-                            d={
-                              "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                            }
-                          />
-                        </svg>
-                        Smart Exclusive Series
-                      </div>
-
                       {/* Golden Smart Logo */}
                       <div className={"mb-3"}>
                         <img
@@ -888,77 +509,6 @@ export default function HomePage({ home, countries } = {}) {
                         natural stone-wash textures.
                       </p>
 
-                      {/* Feature Chips with SVG Icons */}
-                      <div className={"flex flex-wrap gap-2 sm:gap-2.5 mt-5"}>
-                        <div
-                          className={
-                            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium"
-                          }
-                        >
-                          <svg
-                            className={"w-3.5 h-3.5 text-amber-400"}
-                            viewBox={"0 0 24 24"}
-                            fill={"none"}
-                            stroke={"currentColor"}
-                            strokeWidth={"2.5"}
-                          >
-                            <path
-                              strokeLinecap={"round"}
-                              strokeLinejoin={"round"}
-                              d={
-                                "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                              }
-                            />
-                          </svg>
-                          <span>Metallic & Pearl</span>
-                        </div>
-
-                        <div
-                          className={
-                            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium"
-                          }
-                        >
-                          <svg
-                            className={"w-3.5 h-3.5 text-rose-400"}
-                            viewBox={"0 0 24 24"}
-                            fill={"none"}
-                            stroke={"currentColor"}
-                            strokeWidth={"2.5"}
-                          >
-                            <path
-                              strokeLinecap={"round"}
-                              strokeLinejoin={"round"}
-                              d={
-                                "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-                              }
-                            />
-                          </svg>
-                          <span>Velvet & Suede Touch</span>
-                        </div>
-
-                        <div
-                          className={
-                            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium"
-                          }
-                        >
-                          <svg
-                            className={"w-3.5 h-3.5 text-sky-400"}
-                            viewBox={"0 0 24 24"}
-                            fill={"none"}
-                            stroke={"currentColor"}
-                            strokeWidth={"2.5"}
-                          >
-                            <path
-                              strokeLinecap={"round"}
-                              strokeLinejoin={"round"}
-                              d={
-                                "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                              }
-                            />
-                          </svg>
-                          <span>Tactile Stucco & Sand</span>
-                        </div>
-                      </div>
                     </div>
 
                     {/* Bottom CTA Button */}
@@ -1001,36 +551,7 @@ export default function HomePage({ home, countries } = {}) {
             {/* Discover Your Perfect Shade (colour trends) */}
             <div className={"w-full"} style={cssStyle(sectionStyle)}>
               <div className={"text-center px-4 max-w-3xl mx-auto mb-6 sm:mb-8"}>
-                <div
-                  className={
-                    "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 text-amber-800 text-xs font-semibold tracking-wide uppercase mb-3 shadow-sm"
-                  }
-                >
-                  <svg
-                    className={"w-3.5 h-3.5 text-amber-600"}
-                    viewBox={"0 0 24 24"}
-                    fill={"none"}
-                    stroke={"currentColor"}
-                    strokeWidth={"2.5"}
-                  >
-                    <path
-                      strokeLinecap={"round"}
-                      strokeLinejoin={"round"}
-                      d={
-                        "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-                      }
-                    />
-                  </svg>
-                  <span>NCS Color Trends 2026</span>
-                </div>
                 <h2 className={sectionHeading}>Discover Your Perfect Shade</h2>
-                <p
-                  className={
-                    "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2"
-                  }
-                >
-                  Immerse yourself in our signature Mocha Mousse &amp; earthy warm hues — thoughtfully curated to bring timeless warmth, depth, and serenity to your living spaces.
-                </p>
               </div>
 
               <div
@@ -1069,26 +590,6 @@ export default function HomePage({ home, countries } = {}) {
                       "relative z-10 h-full w-full flex flex-col justify-end md:justify-center items-start p-6 sm:p-10 md:p-12 lg:p-16 max-w-xl lg:max-w-2xl md:ml-auto text-left"
                     }
                   >
-                    {/* Shiny Series Pill Badge */}
-                    <div
-                      className={
-                        "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold uppercase tracking-wider mb-3 shadow-sm"
-                      }
-                    >
-                      <svg
-                        className={"w-3.5 h-3.5 text-amber-300"}
-                        viewBox={"0 0 20 20"}
-                        fill={"currentColor"}
-                      >
-                        <path
-                          d={
-                            "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          }
-                        />
-                      </svg>
-                      <span>Shiny Luxury Finish</span>
-                    </div>
-
                     {/* Shiny Logo */}
                     <div className={"mb-3 sm:mb-4"}>
                       <img
@@ -1216,7 +717,7 @@ export default function HomePage({ home, countries } = {}) {
               </div>
             </div>
 
-            {/* Stronger Prints (inks) */}
+            {/* Stronger Paints, Brighter Results */}
             <div
               className={"w-full"}
               style={cssStyle("flex-shrink: 0; padding-top: 3rem; padding-bottom: 2rem")}
@@ -1230,39 +731,9 @@ export default function HomePage({ home, countries } = {}) {
                   >
                     {/* Header with Eyebrow Badge, SVG Icon, Heading and Subtitle */}
                     <div className={"text-center max-w-3xl mx-auto mb-8 md:mb-12"}>
-                      <div
-                        className={
-                          "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-800 text-xs font-semibold tracking-wide uppercase mb-3 shadow-sm"
-                        }
-                      >
-                        <svg
-                          className={"w-3.5 h-3.5 text-blue-600"}
-                          viewBox={"0 0 24 24"}
-                          fill={"none"}
-                          stroke={"currentColor"}
-                          strokeWidth={"2.5"}
-                        >
-                          <path
-                            strokeLinecap={"round"}
-                            strokeLinejoin={"round"}
-                            d={"M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"}
-                          />
-                          <circle cx={"12"} cy={"15"} r={"2"} />
-                        </svg>
-                        <span>Precision Printing Formulations</span>
-                      </div>
-
                       <h2 className={sectionHeading}>
-                        Stronger Prints, Brighter Results
+                        Stronger Paints, Brighter Results
                       </h2>
-
-                      <p
-                        className={
-                          "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2"
-                        }
-                      >
-                        Engineered for commercial presses, packaging converters, and industrial lines — delivering exceptional color intensity, rapid curing, and pin-sharp substrate adhesion.
-                      </p>
                     </div>
 
                     {/* Mobile Carousel */}
@@ -1271,12 +742,12 @@ export default function HomePage({ home, countries } = {}) {
                         "flex md:hidden overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide"
                       }
                     >
-                      {home.inks.map((ink, index3) => (
+                      {home.paints.map((paint, index3) => (
                         <div
                           key={index3}
                           className={"flex-shrink-0 snap-center w-[290px] h-[400px]"}
                         >
-                          <InkGridCard ink={ink} style={cssStyle("height: 100%")} />
+                          <PaintGridCard paint={paint} style={cssStyle("height: 100%")} />
                         </div>
                       ))}
                     </div>
@@ -1287,122 +758,49 @@ export default function HomePage({ home, countries } = {}) {
                         "hidden md:grid grid-cols-1 gap-4 lg:gap-5 lg:[grid-template-columns:30%_40%_30%]"
                       }
                     >
-                      {/* Left Column: Offset Inks (Full height) */}
+                      {/* Left Column: Interior (Full height) */}
                       <div>
-                        <InkGridCard
-                          ink={inkBy["Offset Inks"]}
+                        <PaintGridCard
+                          paint={paintBy["Royal Velvet Interior Emulsion"]}
                           style={cssStyle("height: clamp(520px, 62vh, 640px)")}
                         />
                       </div>
 
-                      {/* Middle Column: 2 Rows (Flexo + Silk Screen, Metal + Rotogravure) */}
-                      <div className={"flex flex-col gap-4 lg:gap-5 justify-between"}>
-                        {/* Row 1 */}
-                        <div className={"grid grid-cols-3 gap-4 lg:gap-5"}>
-                          <div className={"col-span-1"}>
-                            <InkGridCard
-                              ink={inkBy["Flexo"]}
-                              style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
-                            />
-                          </div>
-                          <div className={"col-span-2"}>
-                            <InkGridCard
-                              ink={inkBy["Silk Screen"]}
-                              style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Row 2 */}
-                        <div className={"grid grid-cols-3 gap-4 lg:gap-5"}>
-                          <div className={"col-span-1"}>
-                            <InkGridCard
-                              ink={inkBy["Metal Coating"]}
-                              style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
-                            />
-                          </div>
-                          <div className={"col-span-2"}>
-                            <InkGridCard
-                              ink={inkBy["Rotogravure"]}
-                              style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
-                            />
-                          </div>
-                        </div>
+                      {/* Middle Column: 2 x 2 grid */}
+                      <div className={"grid grid-cols-2 gap-4 lg:gap-5"}>
+                        {[
+                          "Easy Clean Washable Paint",
+                          "Industrial Quick Drying Paint",
+                          "Exterior Emulsion",
+                          "Water Based Home Paint",
+                        ].map((label) => (
+                          <PaintGridCard
+                            key={label}
+                            compact
+                            paint={paintBy[label]}
+                            style={cssStyle("height: clamp(248px, 29.5vh, 308px)")}
+                          />
+                        ))}
                       </div>
 
-                      {/* Right Column: Textile (Full height matching Offset Inks) */}
+                      {/* Right Column: Exterior (Full height matching the left column) */}
                       <div>
-                        <InkGridCard
-                          ink={inkBy["Textile"]}
+                        <PaintGridCard
+                          paint={paintBy["Weather Shield Acrylic Paint"]}
                           style={cssStyle("height: clamp(520px, 62vh, 640px)")}
                         />
-                      </div>
-                    </div>
-
-                    {/* Performance Pillars Row */}
-                    <div
-                      className={
-                        "mt-10 md:mt-12 pt-8 border-t border-gray-200/80 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto"
-                      }
-                    >
-                      <div className={"flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-gray-100 shadow-sm"}>
-                        <div className={"w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0"}>
-                          <svg className={"w-5 h-5"} fill={"none"} stroke={"currentColor"} viewBox={"0 0 24 24"} strokeWidth={"2"}>
-                            <path strokeLinecap={"round"} strokeLinejoin={"round"} d={"M13 10V3L4 14h7v7l9-11h-7z"} />
-                          </svg>
-                        </div>
-                        <div className={"text-left"}>
-                          <div className={"text-xs font-bold text-gray-900 font-poppins"}>Rapid Cure Speed</div>
-                          <div className={"text-[11px] text-gray-500 font-manrope"}>UV &amp; air-cure formulas</div>
-                        </div>
-                      </div>
-
-                      <div className={"flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-gray-100 shadow-sm"}>
-                        <div className={"w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"}>
-                          <svg className={"w-5 h-5"} fill={"none"} stroke={"currentColor"} viewBox={"0 0 24 24"} strokeWidth={"2"}>
-                            <path strokeLinecap={"round"} strokeLinejoin={"round"} d={"M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"} />
-                          </svg>
-                        </div>
-                        <div className={"text-left"}>
-                          <div className={"text-xs font-bold text-gray-900 font-poppins"}>High Dot Sharpness</div>
-                          <div className={"text-[11px] text-gray-500 font-manrope"}>Micro-detail precision</div>
-                        </div>
-                      </div>
-
-                      <div className={"flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-gray-100 shadow-sm"}>
-                        <div className={"w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0"}>
-                          <svg className={"w-5 h-5"} fill={"none"} stroke={"currentColor"} viewBox={"0 0 24 24"} strokeWidth={"2"}>
-                            <path strokeLinecap={"round"} strokeLinejoin={"round"} d={"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"} />
-                          </svg>
-                        </div>
-                        <div className={"text-left"}>
-                          <div className={"text-xs font-bold text-gray-900 font-poppins"}>Substrate Adhesion</div>
-                          <div className={"text-[11px] text-gray-500 font-manrope"}>Paper, film, tin &amp; fabric</div>
-                        </div>
-                      </div>
-
-                      <div className={"flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-gray-100 shadow-sm"}>
-                        <div className={"w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0"}>
-                          <svg className={"w-5 h-5"} fill={"none"} stroke={"currentColor"} viewBox={"0 0 24 24"} strokeWidth={"2"}>
-                            <path strokeLinecap={"round"} strokeLinejoin={"round"} d={"M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.286L13 21l-2.286-6.857L5 12l5.714-2.286L13 3z"} />
-                          </svg>
-                        </div>
-                        <div className={"text-left"}>
-                          <div className={"text-xs font-bold text-gray-900 font-poppins"}>Low Odor &amp; Safe</div>
-                          <div className={"text-[11px] text-gray-500 font-manrope"}>Global compliance standards</div>
-                        </div>
                       </div>
                     </div>
 
                     {/* Bottom CTA Button */}
                     <div className={"text-center pt-8 md:pt-10 pb-2"}>
                       <SiteLink
-                        href={"/ink"}
+                        href={"/interior-paints"}
                         className={
                           "inline-flex items-center gap-3 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 hover:from-blue-700 hover:to-violet-800 text-white font-bold text-sm sm:text-base shadow-xl shadow-indigo-500/25 hover:shadow-2xl hover:shadow-indigo-500/35 hover:-translate-y-0.5 transition-all duration-300 group/btn"
                         }
                       >
-                        <span>Explore All Ink Formulations</span>
+                        <span>Explore Our Paints</span>
                         <span
                           className={
                             "w-7 h-7 rounded-full bg-white/20 flex items-center justify-center group-hover/btn:translate-x-1 transition-transform"
@@ -1428,39 +826,50 @@ export default function HomePage({ home, countries } = {}) {
                 </section>
               </div>
             </div>
+
+            {/* Paint Gallery (videos) */}
+            <div className={"w-full"} style={cssStyle(sectionStyle)}>
+              <div className={"text-center px-4 max-w-3xl mx-auto mb-8 sm:mb-12"}>
+                <h2 className={sectionHeading}>Aeropolish Paint Gallery</h2>
+                <p className={"mt-3 text-sm sm:text-base font-manrope text-gray-600"}>
+                  Watch walls come alive with colour, finish and craftsmanship.
+                </p>
+              </div>
+              <div className={"w-[96%] sm:w-[98%] mx-auto max-w-5xl"}>
+                <div
+                  className={
+                    "flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0"
+                  }
+                >
+                  {[
+                    { src: "/videos/stylish-wall-painting.mp4", title: "Stylish Wall Painting" },
+                    { src: "/videos/wall-painting-1.mp4", title: "Wall Painting in Action" },
+                    { src: "/videos/wall-painting-2.mp4", title: "Wall Painting Finish" },
+                  ].map((video) => (
+                    <figure
+                      key={video.src}
+                      className={
+                        "flex-shrink-0 snap-center w-[72vw] sm:w-[280px] md:w-auto overflow-hidden rounded-2xl border border-gray-200 bg-black shadow-sm"
+                      }
+                    >
+                      <video
+                        className={"block w-full aspect-[9/16] object-cover"}
+                        src={video.src}
+                        controls
+                        playsInline
+                        preload={"metadata"}
+                        aria-label={video.title}
+                      />
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             {/* Contact */}
             <div className={"w-full"} style={cssStyle(sectionStyle)}>
               <div className={"text-center px-4 max-w-3xl mx-auto mb-8 sm:mb-12"}>
-                <div
-                  className={
-                    "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200/80 text-purple-800 text-xs font-semibold tracking-wide uppercase mb-3 shadow-sm"
-                  }
-                >
-                  <svg
-                    className={"w-3.5 h-3.5 text-purple-600"}
-                    viewBox={"0 0 24 24"}
-                    fill={"none"}
-                    stroke={"currentColor"}
-                    strokeWidth={"2.5"}
-                  >
-                    <path
-                      strokeLinecap={"round"}
-                      strokeLinejoin={"round"}
-                      d={
-                        "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                      }
-                    />
-                  </svg>
-                  <span>Customer Support &amp; Partnerships</span>
-                </div>
                 <h2 className={sectionHeading}>Get in Touch with Aeropolish</h2>
-                <p
-                  className={
-                    "text-sm sm:text-base lg:text-lg font-manrope text-center text-gray-600 max-w-2xl mx-auto leading-relaxed mt-2"
-                  }
-                >
-                  Reach out for architectural consultations, bulk commercial orders, personalized color mixing, or dealer network registration.
-                </p>
               </div>
 
               <div className={"w-[96%] sm:w-[98%] mx-auto"}>

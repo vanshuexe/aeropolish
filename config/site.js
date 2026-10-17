@@ -21,7 +21,8 @@ const navigation = [
       { label: "Interior Paints", href: "/interior-paints" },
       { label: "Exterior Paints", href: "/exterior-paints" },
       { label: "Industrial Paints", href: "/industrial-paints" },
-      { label: "Ink", href: "/ink" },
+      { label: "Thinners", href: "/thinners" },
+      { label: "Water Shield & Waterproofing", href: "/waterproofing" },
     ],
   },
   {
@@ -34,6 +35,7 @@ const navigation = [
       { label: "RAL Colours", href: "/ral-colours" },
     ],
   },
+  { label: "Private Label", href: "/private-label", key: "private-label" },
 ];
 
 const footerLinks = {
@@ -45,8 +47,9 @@ const footerLinks = {
     { label: "RAL Colours", href: "/ral-colours" },
   ],
   support: [
-    { label: "Catalogs", href: "/catalogs" },
     { label: "About Us", href: "/about-us" },
+    { label: "Paint Guides", href: "/paint-guides" },
+    { label: "Private Label", href: "/private-label" },
     { label: "Contact Us", href: "/#contact" },
     { label: "Client Inquiry", href: "/client" },
     { label: "Become a Vendor", href: "/vendor" },
@@ -60,28 +63,28 @@ const productCategories = {
     title: "Interior Paints",
     description:
       "Transform your indoor spaces with our premium interior paint solutions",
-    heroImage: "/new-images/interior-paints.svg",
+    heroImage: "/new-images/banner-interior.svg",
     allLabel: "All Interior Paint Products",
   },
   "exterior-paints": {
     title: "Exterior Paints",
     description:
       "Protect and beautify your outdoor surfaces with our durable exterior paint solutions",
-    heroImage: "/new-images/exterior-paints.svg",
+    heroImage: "/new-images/banner-exterior.svg",
     allLabel: "All Exterior Paint Products",
   },
   "industrial-paints": {
     title: "Industrial Paints",
     description:
       "Heavy-duty protection for industrial environments and specialized applications",
-    heroImage: "/new-images/industrial-paints.svg",
+    heroImage: "/new-images/banner-industrial.svg",
     allLabel: "All Industrial Paint Products",
   },
   ink: {
     title: "Ink",
     description:
       "High-quality printing inks for various industrial and commercial applications",
-    heroImage: "/new-images/inks.svg",
+    heroImage: "/new-images/banner-ink.svg",
     allLabel: "All Ink Products",
   },
 
