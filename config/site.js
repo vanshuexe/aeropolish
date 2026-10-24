@@ -10,7 +10,7 @@ const navigation = [
       { label: "Our Vision", href: "/our-vision" },
       { label: "Our Mission", href: "/our-mission" },
       { label: "Client Inquiry", href: "/client" },
-      { label: "Become a Vendor", href: "/vendor" },
+      { label: "Become a Vendor / Supplier", href: "/vendor" },
       { label: "Investor Relations", href: "/investor" },
     ],
   },
@@ -36,6 +36,8 @@ const navigation = [
     ],
   },
   { label: "Private Label", href: "/private-label", key: "private-label" },
+  { label: "Gallery", href: "/gallery", key: "gallery" },
+  { label: "Blogs", href: "/blogs", key: "blogs" },
 ];
 
 const footerLinks = {
@@ -50,9 +52,11 @@ const footerLinks = {
     { label: "About Us", href: "/about-us" },
     { label: "Paint Guides", href: "/paint-guides" },
     { label: "Private Label", href: "/private-label" },
+    { label: "Our Gallery", href: "/gallery" },
+    { label: "Blogs", href: "/blogs" },
     { label: "Contact Us", href: "/#contact" },
     { label: "Client Inquiry", href: "/client" },
-    { label: "Become a Vendor", href: "/vendor" },
+    { label: "Become a Vendor / Supplier", href: "/vendor" },
     { label: "Investor Relations", href: "/investor" },
   ],
 };
@@ -140,8 +144,12 @@ const colorFamilies = [
 
 module.exports = {
   siteName: "Aeropolish",
+  // Homepage <title>; other pages use "<page> | Aeropolish".
+  seoTitle: "Aeropolish: Top industrial and home decorative paints",
   description:
-    "Aeropolish Paints & Coating Industry — reliable, performance-oriented and value-driven coatings for industrial, commercial, infrastructure and decorative applications.",
+    "Aeropolish: Top industrial and home decorative paints. Reliable, performance-oriented and value-driven coatings for industrial, commercial, infrastructure and decorative applications.",
+  // Footer text (the slogan under the logo and the copyright line).
+  footer: { slogan: "Apna Rang - Apni Pehchaan.", copyright: "Aeropolish Paints & Coating Industry" },
   navigation,
   footerLinks,
   productCategories,
